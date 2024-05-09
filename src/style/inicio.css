@@ -1,0 +1,9 @@
+.navBar{
+    background-color: aliceblue;
+    display: flex;
+    justify-content: flex-start;
+}
+
+body{
+background-image: url(../imagens/fundoMadeira.jpg);
+}
