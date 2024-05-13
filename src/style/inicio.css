@@ -1,9 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* navBar ou Header */
 .navBar{
-    background-color: aliceblue;
+    background-color: #F4E6E6;
+    display: flex;
+    justify-content:space-between;
+    padding: 20px;
+    align-items: center;
+    height: 25px;
+    border-bottom: 3px solid #77D400;
+    font-family: 'Montserrat' , sans-serif;
+}
+
+.navBar img {
+    height: 100px;
+    max-height: 350%; 
+    margin-top: 40px;
+}
+
+.container {
     display: flex;
     justify-content: flex-start;
 }
 
+.navItem {
+    display: flex;
+    align-items:flex-start;
+    margin-right: 100px; /* Adiciona margem à direita */
+}
+
+.navLink {
+    text-decoration: none;
+    color: black;
+    
+}
 body{
 background-image: url(../imagens/fundoMadeira.jpg);
+}
+
+/* Banner*/
+.conteudoTitulo{
+    height: 300px;
+    width: 1000px;
+}
+.conteudoTitulo img {
+    margin-top: 40px;
+    margin-left: 300px;  
+}
+.conteudoTitulo h1{
+    font-weight: normal;
+    margin-left: 90px;
+    font-size: 50px;
+    height: 80px;
+    width: 950px;
+}
+
+/* conteudo */
+.telaInicial{
+    font-family: "Roboto Condensed", sans-serif;
+
+}
+.conteudoTexto{
+    height: 500px;
+    width: 750px;
+    margin-left: 90px;
+    font-size: 25px;
+}
+.fotos{
+    position: relative;
+    display: flex;
+    margin-left: 1000px;
+    /* margin-top: -300px; */
+}
+#wally5{
+    position: absolute;
+    height: 550px;
+    width: 550px;
+    margin-left: 200px;
+    margin-top: -480px;
+    
+}
+#wally3 {
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    margin-top: -70px;
+    margin-left: -60px;
 }
