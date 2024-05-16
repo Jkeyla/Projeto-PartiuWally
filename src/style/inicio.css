@@ -36,7 +36,8 @@
     
 }
 body{
-background-image: url(../imagens/fundoMadeira.jpg);
+    margin: 0;
+    background-image: url(../imagens/fundoMadeira.jpg);
 }
 
 /* Banner*/
@@ -57,34 +58,42 @@ background-image: url(../imagens/fundoMadeira.jpg);
 }
 
 /* conteudo */
+.telaInicialCompleta{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
 .telaInicial{
+    display: flex;
     font-family: "Roboto Condensed", sans-serif;
 
 }
 .conteudoTexto{
+    position: relative;
     height: 500px;
     width: 750px;
     margin-left: 90px;
-    font-size: 25px;
+    font-size: 30px;
 }
 .fotos{
     position: relative;
     display: flex;
-    margin-left: 1000px;
-    /* margin-top: -300px; */
+    top: -120%;
+    margin-left: 80%;
 }
 #wally5{
     position: absolute;
     height: 550px;
     width: 550px;
-    margin-left: 200px;
-    margin-top: -480px;
+    left: 200px;
+    top: -480px;
     
 }
-#wally3 {
+#wally3{
     position: absolute;
     height: 400px;
     width: 400px;
-    margin-top: -70px;
-    margin-left: -60px;
+    top: -70px;
+    left: -60px;
 }
