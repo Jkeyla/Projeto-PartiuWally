@@ -3,7 +3,7 @@
 
 /* navBar ou Header */
 .navBar {
-    background-color: #F4E6E6;
+    background-color: rgba(244, 230, 230,0.7);
     display: flex;
     justify-content: space-between;
     padding: 20px;
@@ -124,7 +124,7 @@ body {
 
 .telaRegras {
     display: flex;
-    background-color: #F4E6E6;
+    background-image: url(../imagens/telaPapel.jpg);
     margin-top: 24%;
 }
 
