@@ -2,20 +2,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* navBar ou Header */
-.navBar{
+.navBar {
     background-color: #F4E6E6;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     padding: 20px;
     align-items: center;
     height: 25px;
+    width: 100%;
     border-bottom: 3px solid #77D400;
-    font-family: 'Montserrat' , sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    position: fixed;
+    /* Torna a navbar fixa */
+    z-index: 1000;
 }
 
 .navBar img {
     height: 100px;
-    max-height: 350%; 
+    max-height: 350%;
     margin-top: 40px;
 }
 
@@ -26,37 +30,41 @@
 
 .navItem {
     display: flex;
-    align-items:flex-start;
-    margin-right: 100px; /* Adiciona margem à direita */
+    align-items: flex-start;
+    margin-right: 100px;
+    /* Adiciona margem à direita */
 }
 
 .navLink {
     text-decoration: none;
     color: black;
-    
+
 }
-body{
+
+body {
     margin: 0;
     background-image: url(../imagens/fundoMadeira.jpg);
 }
 
 /* Banner*/
-.conteudoTitulo{
+.conteudoTitulo {
     /* height: 300px; */
     width: 60%;
     display: flex;
     flex-direction: column;
     padding: 40px;
-    text-align:start;
-    
+    text-align: start;
+
 }
+
 .conteudoTitulo img {
     position: relative;
     margin-left: 35%;
     margin-top: 10px;
     width: 300px;
 }
-.conteudoTitulo h1{
+
+.conteudoTitulo h1 {
     font-weight: normal;
     font-size: 40px;
 }
@@ -65,21 +73,24 @@ body{
 .conteudoTitulo p {
     font-size: 20px;
 }
+
 /* .teste{
     display: flex;
     justify-content:space-around;
 } */
-.telaInicial{
+.telaInicial {
     display: flex;
     font-family: "Roboto Condensed", sans-serif;
 }
-.fotos{
+
+.fotos {
     display: flex;
     position: relative;
     width: 45%;
     /* padding: 10px; */
 }
-.fotos{
+
+.fotos {
     display: flex;
     flex-direction: row;
     position: absolute;
@@ -94,15 +105,85 @@ body{
     margin-bottom: 12%;
     padding: 10px; */
 }
-#wally5{
+
+#wally5 {
     position: relative;
     width: 500px;
     left: 180px;
     top: 50px;
 }
-#wally3{
+
+#wally3 {
     position: relative;
     top: 300px;
     width: 300px;
     right: 350px;
+}
+
+/* tela regras */
+
+.telaRegras {
+    display: flex;
+    background-color: #F4E6E6;
+    margin-top: 24%;
+}
+
+.conteudoTituloRegras {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Roboto Condensed", sans-serif;
+    justify-content: center;
+    padding: 40px;
+    font-size: 35px;
+}
+
+.regrasLeft {
+    width: 40%;
+    margin-right: 45%;
+    font-size: 20px;
+}
+
+.regrasRight {
+    position: absolute;
+    width: 40%;
+    margin-left: 45%;
+    margin-top: 9%;
+    font-size: 20px;
+}
+
+.telaONU {
+    font-family: "Roboto Condensed", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.telaONUTitulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    padding: 80px;
+    margin-top: 30px;
+}
+.SaudeBemEstar{
+    width: 50%;
+    height: 50%;
+    font-size: 25px;
+    margin-right: 600px;
+}
+.praticaWally{
+    width: 30%;
+    font-size: 30px;
+    margin-left: 600px;
+    margin-top: -100px;
+}
+.logosONU{
+    position: absolute;
+    top: 320%;
+    height: 80px;
+    padding: 40px;
+    left: 0%;
 }
