@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="../assets/style/cadastro.css">
+  <link rel="icon" href="../assets/imagens/partiuWally.png">
+  <script src="https://kit.fontawesome.com/b6143907c1.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="nav" class="navBar">
+    <img src="../assets/imagens/logo.png">
+    <ul class="container">
+      <li class="navItem"><a href="telainicial.html" class="navLink">Início</a></li>
+      <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
+      <li class="navItem"><a href="feedback.html" class="navLink">Feedback</a></li>
+      <li class="navItem"><a href="cadastro.html" class="navLink">Cadastro</a></li>
+      <li class="navItem"><a href="login.html" class="navLink">Login</a></li>
+    </ul>
+  </div>
+  <!--header fim-->
+
+  <!-- <div class="login">
+    <div class="alerta_erro">
+      <div class="card_erro" id="cardErro">
+        <span id="mensagem_erro"></span>
+      </div>
+    </div>
+ -->
+
+  <div class="cadastro">
+    <form action="">
+      <h2>Cadastre-se!</h2>
+      <i class="fa-solid fa-user"></i>
+      <label for="">Nome:</label>
+      <div class="input">
+        <input type="text" id="name" name="name">
+      </div>
+      <i class="fa-solid fa-envelope"></i>
+      <label for="">E-mail:</label>
+      <div class="input">
+        <input type="text" id="email" name="email">
+      </div>
+      <i class="fa-solid fa-lock"></i>
+      <label for="">Senha:</label>
+      <div class="input">
+        <input type="password" id="senha" name="senha">
+      </div>
+      <i class="fa-solid fa-lock"></i>
+      <label for="">Confirmar senha:</label>
+      <div class="input">
+        <input type="password" id="confirmSenha" name="confirmSenha">
+      </div>
+      <i class="fa-solid fa-calendar-days"></i>
+      <label for="">Data de nascimento:</label>
+      <div class="input">
+        <input type="date" id="dtNasc" name="dtNasc">
+      </div>
+      <div id="btn">
+        <button onclick="cadastrar()" type="submit">Pronto</button>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>
+
+<script>
+  function cadastrar() {
+    aguardar();
+
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var nomeVar = nome_input.value;
+    var emailVar = email_input.value;
+    var cpfVar = cpf_input.value;
+    var senhaVar = senha_input.value;
+    var confirmacaoSenhaVar = confirmacao_senha_input.value;
+    var empresaVar = listaEmpresas.value;
+    var email_arroba = emailVar.indexOf('@');
+    var email_ponto = emailVar.indexOf('.');
+    // if (
+    //   nomeVar == "" ||
+    //   cpfVar == "" ||
+    //   emailVar == "" ||
+    //   senhaVar == "" ||
+    //   confirmacaoSenhaVar == "" ||
+    //   empresaVar == ""
+    // ) {
+    //   cardErro.style.display = "block";
+    //   mensagem_erro.innerHTML =
+    //     "(Mensagem de erro para todos os campos em branco)";
+
+    //   finalizarAguardar();
+    //   return false;
+    // } 
+    if (nomeVar == "" || nomeVar.length <= 1) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(Nome inválido)";
+
+      finalizarAguardar();
+      return false;
+    }
+
+    if (cpfVar == "" || cpfVar.length != 11) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(CPF inválido)";
+
+      finalizarAguardar();
+      return false;
+    }
+
+    if (emailVar == "" || email_arroba == 0 || email_ponto <= 0) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(email inválido)";
+
+      finalizarAguardar();
+      return false;
+    }
+
+    if (senhaVar == "" || senhaVar.length <= 6) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(senha inválida)";
+
+      finalizarAguardar();
+      return false;
+    }
+
+    if (confirmacaoSenhaVar == "" || confirmacaoSenhaVar != senhaVar) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(confirmação de senha inválida)";
+
+      finalizarAguardar();
+      return false;
+    }
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nomeVar,
+        cpfServer: cpfVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+        empresaServer: empresaVar
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+          mensagem_erro.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }
+
+  function listar() {
+    fetch("/empresas/listar", {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then((empresas) => {
+          empresas.forEach((empresa) => {
+            listaEmpresas.innerHTML += `<option value='${empresa.id}'>${empresa.cnpj}</option>`;
+          });
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
+</script>

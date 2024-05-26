@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="../assets/style/login.css">
+  <link rel="icon" href="../assets/imagens/partiuWally.png">
+  <script src="https://kit.fontawesome.com/b6143907c1.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="nav" class="navBar">
+    <img src="../assets/imagens/logo.png">
+    <ul class="container">
+      <li class="navItem"><a href="telainicial.html" class="navLink">Início</a></li>
+      <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
+      <li class="navItem"><a href="feedback.html" class="navLink">Feedback</a></li>
+      <li class="navItem"><a href="cadastro.html" class="navLink">Cadastro</a></li>
+      <li class="navItem"><a href="login.html" class="navLink">Login</a></li>
+    </ul>
+  </div>
+  <!--header fim-->
+
+  <!-- <div class="login">
+    <div class="alerta_erro">
+      <div class="card_erro" id="cardErro">
+        <span id="mensagem_erro"></span>
+      </div>
+    </div>
+ -->
+
+  <div class="login">
+    <form action="">
+      <h2>Faça login!</h2>
+      <i class="fa-solid fa-user"></i>
+      <label for="">Nome:</label>
+      <div class="input">
+        <input type="text" id="name" name="name">
+      </div>
+      <i class="fa-solid fa-lock"></i>
+      <label for="">Senha:</label>
+      <div class="input">
+        <input type="password" id="senha" name="senha">
+      </div>
+      <div id="btn">
+        <button onclick="cadastrar()" type="submit">Pronto</button>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

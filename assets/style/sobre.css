@@ -9,7 +9,6 @@
     padding: 20px;
     align-items: center;
     height: 25px;
-    /* width: 100%; */
     border-bottom: 3px solid #77D400;
     font-family: 'Montserrat', sans-serif;
     width: 100%;
@@ -61,7 +60,39 @@
     color: black;
 
 }
+
 body {
     margin: 0;
-    background-image: url(../imagens/fundoMadeira.jpg);
+    background-image: url(../imagens/telaPapel.jpg);
+}
+.telaSobre{
+    display: flex;
+    position: absolute;
+    font-family: "Roboto Condensed", sans-serif;
+    justify-content: space-around;
+    align-items: center;
+    /* padding-top: 2%; */
+    
+}
+.conteudoTitulo{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.conteudoTitulo h1{
+    font-size: 36px;
+    font-weight: normal;
+}
+
+.conteudoTitulo p{
+    font-size: 20px;
+}
+.fotos{
+    display: flex;
+    width: 60%;
+    justify-content: flex-end;
+    margin-top: 100px;
+    padding-right: 50px;;
 }
