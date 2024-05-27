@@ -15,6 +15,7 @@ var HOST_APP = process.env.APP_HOST || 'localhost'; // Fallback to 'localhost' i
 var app = express();
 
 var usuarioRouter = require("./src/routes/usuarios");
+app.use("/usuarios", usuarioRouter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 
-app.use("/usuarios", usuarioRouter);
+
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

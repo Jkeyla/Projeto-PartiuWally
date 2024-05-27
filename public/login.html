@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro</title>
+  <title>Login</title>
   <link rel="stylesheet" href="../assets/style/login.css">
   <link rel="icon" href="../assets/imagens/partiuWally.png">
   <script src="https://kit.fontawesome.com/b6143907c1.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
   <div id="nav" class="navBar">
     <img src="../assets/imagens/logo.png">
@@ -22,55 +20,40 @@
     </ul>
   </div>
   <!--header fim-->
-
-  <!-- <div class="login">
-    <div class="alerta_erro">
-      <div class="card_erro" id="cardErro">
-        <span id="mensagem_erro"></span>
-      </div>
-    </div>
- -->
-
-  <div class="login">
-    <form action="">
+  <div class="login" id="cardErro" style="display: block;">
+    <form onsubmit="return entrar()">
       <h2>Faça login!</h2>
-      <i class="fa-solid fa-user"></i>
-      E-mail:
+      <label for="emailinp"><i class="fa-solid fa-user"></i> E-mail:</label>
       <div class="input">
         <input type="text" id="emailinp" name="email">
       </div>
-      <i class="fa-solid fa-lock"></i>
-      Senha:
+      <label for="senhainp"><i class="fa-solid fa-lock"></i> Senha:</label>
       <div class="input">
         <input type="password" id="senhainp" name="senha">
       </div>
       <div id="btn">
-        <button onclick="cadastrar()" type="submit">Pronto</button>
+        <button type="button" onclick="entrar()">Pronto</button>
       </div>
     </form>
-    <span id="telaErro"></span>
   </div>
 </body>
-
 </html>
 <script>
-
   function entrar() {
-    var email = emailinp.value;
-    var senha = senhainp.value;
+    var email = document.getElementById("emailinp").value;
+    var senha = document.getElementById("senhainp").value;
 
-    if (email == "" || senha == "") {
-      telaErro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+    if (email === "" || senha === "") {
+      alert("Mensagem de erro para todos os campos em branco");
       return false;
-    }
-    else {
-      setInterval(telaErro, 5000)
+    } else {
+      setInterval(sumirMensagem, 2000);
     }
 
     console.log("FORM LOGIN: ", email);
     console.log("FORM SENHA: ", senha);
 
-     fetch("/usuarios/autenticar", {
+    fetch("/usuarios/autenticar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -80,29 +63,20 @@
         senhaServer: senha
       })
     }).then(function (resposta) {
-      console.log("ESTOU NO THEN DO entrar()!")
-
       if (resposta.ok) {
-        console.log(resposta);
-
         resposta.json().then(json => {
-          console.log(json);
-          console.log(JSON.stringify(json));
           sessionStorage.EMAIL_USUARIO = json.email;
           sessionStorage.NOME_USUARIO = json.nome;
           sessionStorage.ID_USUARIO = json.idUsuario;
-          sessionStorage.AQUARIOS = JSON.stringify(json.dtNasc)
+          sessionStorage.DT_NASC = JSON.stringify(json.dtNasc);
 
           setTimeout(function () {
-            window.location = "./dashboard/cards.html";
+            window.location = "../public/dashboard.html";
           }, 1000); // apenas para exibir o loading
-
         });
 
       } else {
-
         console.log("Houve um erro ao tentar realizar o login!");
-
         resposta.text().then(texto => {
           console.error(texto);
           finalizarAguardar(texto);
@@ -111,8 +85,19 @@
 
     }).catch(function (erro) {
       console.log(erro);
-    })
+    });
 
     return false;
   }
+
+  function sumirMensagem() {
+    document.getElementById("cardErro").style.display = "none";
+  }
+
+  function finalizarAguardar(mensagem) {
+    document.getElementById("cardErro").style.display = "block";
+    document.getElementById("cardErro").innerText = mensagem;
+    setTimeout(sumirMensagem, 5000);
+  }
+
 </script>

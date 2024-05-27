@@ -1,5 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
-var aquarioModel = require("../models/aquarioModel");
+var aquarioModel = require("../models/feedbackModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -14,25 +14,21 @@ function autenticar(req, res) {
         usuarioModel.autenticar(email, senha)
             .then(
                 function (resultadoAutenticar) {
-                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
-
                     if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
 
-                        aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
-                            .then((resultadoAquarios) => {
+                        feedbackModel.buscarFeedBack(resultadoAutenticar[0].feedback)
+                            .then((resultadoFeedback) => {
                                 if (resultadoAquarios.length > 0) {
                                     res.json({
-                                        id: resultadoAutenticar[0].id,
+                                        idUsuario: resultadoAutenticar[0].idUsuario,
                                         email: resultadoAutenticar[0].email,
-                                        cpf: resultadoAutenticar[0].cpf,
                                         nome: resultadoAutenticar[0].nome,
                                         senha: resultadoAutenticar[0].senha,
-                                        aquarios: resultadoAquarios
+                                        dtNasc: resultadoAutenticar[0].dtNasc,
+                                        feedback: resultadoFeedback
                                     });
                                 } else {
-                                    res.status(204).json({ aquarios: [] });
+                                    res.status(204).json({ feedback: [] });
                                 }
                             })
                     } else if (resultadoAutenticar.length == 0) {

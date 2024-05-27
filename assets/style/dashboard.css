@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* navBar ou Header */
+.navBar {
+    background-color: rgba(244, 230, 230, 0.7);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    height: 25px;
+    /* width: 100%; */
+    border-bottom: 3px solid #77D400;
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    position: relative;
+    /* Torna a navbar fixa */
+    z-index: 1000;
+}
+
+.navBar img {
+    height: 100px;
+    max-height: 350%;
+    margin-top: 40px;
+}
+
+.navLink::before {
+    transition: all .6s;
+    transform: scaleX(0);
+    transform-origin: left;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 3px;
+    border-radius: 2.5px;
+    bottom: -2px;
+    background-color: #77D400;
+}
+
+.navLink:hover::before {
+    transform: scaleX(1);
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.navItem {
+    display: flex;
+    align-items: flex-start;
+    margin-right: 100px;
+    /* Adiciona margem à direita */
+    cursor: pointer;
+    position: relative;
+    transition: all .2s ease-in-out;
+}
+
+.navLink {
+    text-decoration: none;
+    color: black;
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+}
+
+body {
+    overflow-x: hidden;
+    background-image: url(../imagens/fundoMadeira.jpg);
+}
+
+.div-results {
+    width: 100%;
+}
+
+.div-results .feed-container {
+    background-color: #212124;
+    border-radius: 5px;
+    margin-bottom: 80px;
+}
+
+/* .conteudoFeedback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+} */
+
+.containerFeed{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
+    
+}
+
+.telaFeedback {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    background-color: #77D400;
+    padding: 50px 0;
+}
+
+.telaFeedback .carrossel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 30px;
+}
