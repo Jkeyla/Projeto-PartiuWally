@@ -110,7 +110,7 @@ body {
 input {
 font-size: 1.2em;
 padding: 5px;
-background: #d5d5d5;
+background-color: #d5d5d5;
 }
 
 .input input{
@@ -120,7 +120,7 @@ background: #d5d5d5;
     font-weight: normal;
     transform: translateY(-10%);
     color: #000;
-    
+    background: #d5d5d5;
 }
 
 #btn{
