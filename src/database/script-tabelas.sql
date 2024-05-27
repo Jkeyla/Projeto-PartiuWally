@@ -1,59 +1,62 @@
--- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
--- Você precisa executar os comandos no banco de dados para criar as tabelas,
--- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
 
 /*
 comandos para mysql server
 */
 
-CREATE DATABASE aquatech;
+CREATE DATABASE partiuwally;
 
-USE aquatech;
-
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14)
-);
+USE partiuwally;
 
 CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+	nome varchar(80),
+	email varchar(267),
+    senha varchar(45),
+    dtNasc date
 );
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+CREATE TABLE feedback (
+	idFeedback INT AUTO_INCREMENT,
+    fkUsuario INT,
+    PRIMARY KEY (idFeedback, fkUsuario),
+	assunto VARCHAR(45),
+	comentario VARCHAR(200),
+	FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+    dataHora timestamp not null default current_timestamp
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+create table favorito (
+	fkUsuario INT,
+	fkFeedback INT,
+	PRIMARY KEY (fkUsuario, fkFeedback),
+	FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (fkFeedback) REFERENCES feedback(idfeedback),
+    dataHora timestamp not null default current_timestamp
 );
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
-);
+insert into usuario(nome,email,senha,dtNasc) values
+("Coraline Lima", "coral.line@gmail.com", "lima2000", "2002-04-20"),
+("Lian Ornelas", "lianOrnelas25@gmail.com", "lian007", "2003-02-25");
 
-insert into empresa (razao_social, cnpj) values ('Empresa 1', '00000000000000');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
+insert into feedback (fkUsuario, assunto, comentario) values 
+(1, 'Melhor que vôley (na minha opinião)', "desde que comecei a jogar, tive mais disponibilidade e soube trabalhar em melhor em equipe"),
+(2, 'Virou parte da minha rotina', "todo domingo depois do culto, junto com jovens da igreja nos reunimos para jogar, amo os domingos");
+
+select * from feedback;
+
+insert into favorito (fkUsuario, fkFeedback)values
+(1, 2); 
+
+select * from favorito;
+select * from feedback;
+select * from usuario;
+
+-- lista os dados do usuário e seus feedbacks 
+select * from usuario JOIN feedback ON idUsuario = fkUsuario;
+
+-- lista o usuário que deu estrela (favoritou) um feedback 
+select * from favorito JOIN usuario ON fkUsuario = idUsuario
+	JOIN feedback ON fkFeedback = idFeedback ;
+    
+-- SELECT idUsuario, nome, email, dtNasc FROM usuario WHERE email = '${email}' AND senha = '${senha}';
