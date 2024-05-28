@@ -63,7 +63,7 @@
 
 body {
     margin: 0;
-    background-image: url(../imagens/fundoMadeira.jpg);
+    background-image: url(../assets/imagens/fundoMadeira.jpg);
 }
 
 /* Banner*/
@@ -144,7 +144,7 @@ body {
 
 .telaRegras {
     display: flex;
-    background-image: url(../imagens/telaPapel.jpg);
+    background-image: url(../assets/imagens/telaPapel.jpg);
     margin-top: 24%;
 }
 
@@ -190,21 +190,23 @@ body {
     margin-top: 30px;
 }
 .SaudeBemEstar{
+    border-left: 6px solid #77D400;
     width: 50%;
     height: 50%;
     font-size: 25px;
-    margin-right: 600px;
+    margin-right: 500px;
 }
 .praticaWally{
+    border-right: 6px solid #77D400;
     width: 40%;
     font-size: 30px;
     margin-left: 600px;
     margin-top: -88px;
 }
 .logosONU{
-    display: flex;
-    flex-direction: row;
-    position: absolute;
+    /* display: flex;
+    flex-direction: row; */
+    position: relative;
     top: 325%;
     height: 80px;
     padding: 40px;

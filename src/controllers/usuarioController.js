@@ -1,5 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
-var aquarioModel = require("../models/feedbackModel");
+var feedbackModel = require("../models/feedbackModel");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -16,13 +16,13 @@ function autenticar(req, res) {
                 function (resultadoAutenticar) {
                     if (resultadoAutenticar.length == 1) {
 
-                        feedbackModel.buscarFeedBack(resultadoAutenticar[0].feedback)
+                        feedbackModel.buscarFeedBack(resultadoAutenticar[0].idfeedback)
                             .then((resultadoFeedback) => {
-                                if (resultadoAquarios.length > 0) {
+                                if (resultadoFeedback.length > 0) {
                                     res.json({
                                         idUsuario: resultadoAutenticar[0].idUsuario,
-                                        email: resultadoAutenticar[0].email,
                                         nome: resultadoAutenticar[0].nome,
+                                        email: resultadoAutenticar[0].email,
                                         senha: resultadoAutenticar[0].senha,
                                         dtNasc: resultadoAutenticar[0].dtNasc,
                                         feedback: resultadoFeedback
@@ -71,7 +71,7 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, cpf, email, senha, empresaId)
+        usuarioModel.cadastrar(nome, email, senha, dtNasc, idfeedback)
             .then(
                 function (resultado) {
                     res.json(resultado);

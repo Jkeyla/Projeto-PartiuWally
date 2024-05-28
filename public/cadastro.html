@@ -5,16 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro</title>
-  <link rel="stylesheet" href="../assets/style/cadastro.css">
-  <link rel="icon" href="../assets/imagens/partiuWally.png">
+  <script src="./js/sessao.js"> </script>
+  <link rel="stylesheet" href="./css/cadastro.css">
+  <link rel="icon" href="./assets/imagens/partiuWally.png">
   <script src="https://kit.fontawesome.com/b6143907c1.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <div id="nav" class="navBar">
-    <img src="../assets/imagens/logo.png">
+    <img src="./assets/imagens/logo.png">
     <ul class="container">
-      <li class="navItem"><a href="telainicial.html" class="navLink">Início</a></li>
+      <li class="navItem"><a href="index.html" class="navLink">Início</a></li>
       <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
       <li class="navItem"><a href="feedback.html" class="navLink">Feedback</a></li>
       <li class="navItem"><a href="cadastro.html" class="navLink">Cadastro</a></li>
@@ -60,7 +61,6 @@
   </div>
   <span id="telaErro"></span>
 </body>
-
 </html>
 
 <script>
@@ -113,19 +113,19 @@
    
       // Enviando o valor da nova input
       fetch("/usuarios/cadastrar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          // crie um atributo que recebe o valor recuperado aqui
-          // Agora vá para o arquivo routes/usuario.js
-          nomeServer: nome,
-          cpfServer: cpf,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nome,
           emailServer: email,
           senhaServer: senha,
-        }),
-      })
+          dtNascServer: dtNasc
+      }),
+    })
         .then(function (resposta) {
           console.log("resposta: ", resposta);
 
@@ -135,7 +135,7 @@
               "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
             setTimeout(() => {
-              window.location = "login.html";
+              window.location = "../public/login.html";
             }, "2000");
 
           } else {
@@ -148,9 +148,4 @@
 
       return false;
     }
-
-    // function sumirMensagem() {
-    //   cardErro.style.display = "none";
-    // }
-  
 </script>

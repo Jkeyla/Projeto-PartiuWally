@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link rel="stylesheet" href="../assets/style/login.css">
-  <link rel="icon" href="../assets/imagens/partiuWally.png">
+  <script src="./js/sessao.js"></script>
+  <link rel="stylesheet" href="./css/login.css">
+  <link rel="icon" href="./assets/imagens/partiuWally.png">
   <script src="https://kit.fontawesome.com/b6143907c1.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <div id="nav" class="navBar">
-    <img src="../assets/imagens/logo.png">
+    <img src="./assets/imagens/logo.png">
     <ul class="container">
-      <li class="navItem"><a href="telainicial.html" class="navLink">Início</a></li>
+      <li class="navItem"><a href="index.html" class="navLink">Início</a></li>
       <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
       <li class="navItem"><a href="feedback.html" class="navLink">Feedback</a></li>
       <li class="navItem"><a href="cadastro.html" class="navLink">Cadastro</a></li>
@@ -36,7 +37,6 @@
       </div>
     </form>
   </div>
-  <link rel="stylesheet" href="../public/dashboard.html">
 </body>
 </html>
 <script>
@@ -44,7 +44,7 @@
     var email = document.getElementById("emailinp").value;
     var senha = document.getElementById("senhainp").value;
 
-    if (email === "" || senha === "") {
+    if (email == "" || senha == "") {
       alert("Mensagem de erro para todos os campos em branco");
       return false;
     } else {
@@ -64,15 +64,21 @@
         senhaServer: senha
       })
     }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO entrar()!")
+
       if (resposta.ok) {
+        console.log(resposta);
+
         resposta.json().then(json => {
+          console.log(json);
+          console.log(JSON.stringify(json));
           sessionStorage.EMAIL_USUARIO = json.email;
           sessionStorage.NOME_USUARIO = json.nome;
           sessionStorage.ID_USUARIO = json.idUsuario;
-          sessionStorage.DT_NASC = JSON.stringify(json.dtNasc);
+          sessionStorage.DT_NASC = json.dtNasc;
 
           setTimeout(function () {
-            window.location = "../public/dashboard.html";
+            window.location = "./dashboard.html";
           }, 1000); // apenas para exibir o loading
         });
 
@@ -94,11 +100,4 @@
   function sumirMensagem() {
     document.getElementById("cardErro").style.display = "none";
   }
-
-  function finalizarAguardar(mensagem) {
-    document.getElementById("cardErro").style.display = "block";
-    document.getElementById("cardErro").innerText = mensagem;
-    setTimeout(sumirMensagem, 5000);
-  }
-
 </script>

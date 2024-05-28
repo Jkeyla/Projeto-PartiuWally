@@ -69,7 +69,7 @@
 body {
     width: 100%;
     height: 100vh;
-    background-image: url(../imagens/telaPapel.jpg);
+    background-image: url(../assets/imagens/telaPapel.jpg);
     font-family: "Roboto Condensed", sans-serif;
 }
 

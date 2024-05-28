@@ -63,7 +63,7 @@
 
 body {
     margin: 0;
-    background-image: url(../imagens/telaPapel.jpg);
+    background-image: url(../assets/imagens/telaPapel.jpg);
 }
 .telaSobre{
     display: flex;
