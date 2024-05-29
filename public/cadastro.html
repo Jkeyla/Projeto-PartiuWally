@@ -61,6 +61,7 @@
   </div>
   <span id="telaErro"></span>
 </body>
+
 </html>
 
 <script>
@@ -81,7 +82,7 @@
       return false;
     }
 
-    else if (email == "" || email_arroba == 0 || email_ponto <= 0) {
+    else if (email == "" || email_arroba == -1 || email_ponto == -1) {
       alert("E-mail inválido");
       return false;
     }
@@ -91,13 +92,15 @@
         senhaNum = true
       }
     }
-
     if (senha == "") {
       alert("Senha inválida");
       return false;
     }
-
-    else if (senhaNum == false) {
+    else if (senha.length <= 6) {
+      alert("Senha inválida");
+      return false;
+    }
+    if (senhaNum == false) {
       alert("Senha precisa de um caracter numérico")
     }
 
@@ -110,9 +113,9 @@
       alert("Data de Nascimento inválida");
       return false;
     }
-   
-      // Enviando o valor da nova input
-      fetch("/usuarios/cadastrar", {
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -120,32 +123,32 @@
       body: JSON.stringify({
         // crie um atributo que recebe o valor recuperado aqui
         // Agora vá para o arquivo routes/usuario.js
-          nomeServer: nome,
-          emailServer: email,
-          senhaServer: senha,
-          dtNascServer: dtNasc
+        nomeServer: nome,
+        emailServer: email,
+        senhaServer: senha,
+        dtNascServer: dtNasc,
       }),
     })
-        .then(function (resposta) {
-          console.log("resposta: ", resposta);
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
 
-          if (resposta.ok) {
+        if (resposta.ok) {
 
-            telaErro.innerHTML =
-              "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+          telaErro.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
 
-            setTimeout(() => {
-              window.location = "../public/login.html";
-            }, "2000");
+          setTimeout(() => {
+            window.location = "../public/login.html";
+          }, "2000");
 
-          } else {
-            throw "Houve um erro ao tentar realizar o cadastro!";
-          }
-        })
-        .catch(function (resposta) {
-          console.log(`#ERRO: ${resposta}`);
-        });
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
 
-      return false;
-    }
+    return false;
+  }
 </script>

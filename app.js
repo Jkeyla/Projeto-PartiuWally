@@ -26,13 +26,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use((req, res, next) => {
-//     if (req.path.endsWith('.css')) {
-//         res.setHeader('Content-Type', 'text/css');
-//     }
-//     next();
-// });
-
 app.use(cors());
 
 app.use("/", indexRouter);
@@ -44,13 +37,13 @@ app.use("/empresas", empresasRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
-    ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
-    ##   ##  ##       ##  ##            ## ##     ####      ##      ####             ##  ##     ##         ##  
-    ##   ##  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##        ##   
-    ## # ##  ####     #####    ######   ##  ##   ######     ##     ######   ######   ##  ##     ##       ##    
-    #######  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##      ##     
-    ### ###  ##       ##  ##            ## ##    ##  ##     ##     ##  ##             ####      ##     ##      
-    ##   ##  ######   #####             ####     ##  ##     ##     ##  ##              ##      ####    ######  
+    ##   ##     ##     ##       ##     ##    ##             
+    ##   ##    ####    ##       ##      ##  ##           
+    ##   ##   ##  ##   ##       ##       #  #          
+    ## # ##   ######   ##       ##        ##    
+    #######   ##  ##   ##       ##        ##      
+    ### ###   ##  ##   ##       ##        ##  
+    ##   ##   ##  ##   #######  #######   ##    
     \n\n\n                                                                                                 
     Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar .: http://${HOST_APP}:${PORTA_APP} :. \n\n
     Você está rodando sua aplicação em ambiente de .:${ambiente_processo}:. \n\n

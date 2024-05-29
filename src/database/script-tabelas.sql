@@ -59,4 +59,7 @@ select * from usuario JOIN feedback ON idUsuario = fkUsuario;
 select * from favorito JOIN usuario ON fkUsuario = idUsuario
 	JOIN feedback ON fkFeedback = idFeedback ;
     
+SELECT idUsuario, nome, email, dtNasc FROM usuario WHERE email = 'coral.line@gmail.com' AND senha = 'lima2000';
+
+    
 -- SELECT idUsuario, nome, email, dtNasc FROM usuario WHERE email = '${email}' AND senha = '${senha}';
