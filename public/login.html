@@ -67,6 +67,7 @@
       console.log("ESTOU NO THEN DO entrar()!")
 
       if (resposta.ok) {
+        window.alert ("Você será redirecionado para a parte premium deste site");
         console.log(resposta);
         resposta.json().then(json => {
           console.log(json);
@@ -81,6 +82,7 @@
         });
 
       } else {
+        window.alert("Email ou Senha inválidos, tente novamente ou se for novo cadastre-se");
         console.log("Houve um erro ao tentar realizar o login!");
         resposta.text().then(texto => {
           console.error(texto);

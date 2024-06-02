@@ -32,22 +32,22 @@
       <i class="fa-solid fa-user"></i>
       Nome:
       <div class="input">
-        <input type="text" id="nameinp" name="name">
+        <input type="text" id="nameinp" name="name" required>
       </div>
       <i class="fa-solid fa-envelope"></i>
       E-mail:
       <div class="input">
-        <input type="text" id="emailinp" name="email">
+        <input type="text" id="emailinp" name="email" required>
       </div>
       <i class="fa-solid fa-lock"></i>
       Senha:
       <div class="input">
-        <input type="password" id="senhainp" name="senha">
+        <input type="password" id="senhainp" name="senha" required>
       </div>
       <i class="fa-solid fa-lock"></i>
       Confirmar senha:
       <div class="input">
-        <input type="password" id="confirmSenhainp" name="confirmSenha">
+        <input type="password" id="confirmSenhainp" name="confirmSenha" required>
       </div>
       <i class="fa-solid fa-calendar-days"></i>
       Data de nascimento:
@@ -55,7 +55,7 @@
         <input type="date" id="dtNascinp" name="dtNasc">
       </div>
       <div id="btn">
-        <button onclick="cadastrar()">Pronto</button>
+        <button onclick="cadastrar(event)">Pronto</button>
       </div>
     </form>
   </div>
@@ -63,9 +63,9 @@
 </body>
 
 </html>
-
 <script>
-  function cadastrar() {
+function cadastrar(event) {
+  event.preventDefault();
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
     let nome = nameinp.value;
@@ -134,13 +134,14 @@
 
         if (resposta.ok) {
 
-          telaErro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+          alert("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
 
           setTimeout(() => {
-            window.location = "../public/login.html";
-          }, "2000");
+              window.location.href = "login.html";
+            }, 2000);
 
+          limparFormulario();
+          finalizarAguardar();
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
