@@ -88,6 +88,25 @@ function publicar(req, res) {
     }
 }
 
+// function favoritar(req, res) {
+//     const idUsuario = req.params.idUsuario;
+//     const nome = req.params.nome;
+//     const fkFeedback = req.params.fkFeedback;
+//     const dataHora = req.params.dataHora;
+//     feedbackModel.favoritar(idUsuario, nome, fkFeedback, dataHora)
+//     .then(
+//         function (resultado) {
+//             res.json(resultado);
+//         }
+//         .catch(
+//             function (erro) {
+//                 console.log("Erro ao favoritar", erro.sqlMessage);
+//                 res.status(500).json(erro.sqlMessage);
+//             }
+//         )
+//     )
+// }
+
 // function editar(req, res) {
 //     var novaDescricao = req.body.descricao;
 //     var idAviso = req.params.idAviso;

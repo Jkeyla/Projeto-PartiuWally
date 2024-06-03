@@ -21,6 +21,8 @@ var feedbackRouter = require("./src/routes/feedback");
 var medidasRouter = require("./src/routes/medidas");
 var aquariosRouter = require("./src/routes/aquario");
 var empresasRouter = require("./src/routes/empresas");
+var cruzadaRouter = require("./src/routes/cruzada");
+var favoritoRouter = require("./src/routes/favorito");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +36,8 @@ app.use("/feedback", feedbackRouter);
 app.use("/medidas", medidasRouter);
 app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
+app.use("/cruzada", cruzadaRouter);
+app.use("/favorito", favoritoRouter)
 
 app.listen(PORTA_APP, function () {
     console.log(`

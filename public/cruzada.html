@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/palavras.css">
+    <script src="../js/search.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://kit.fontawesome.com/da70223d5b.js" crossorigin="anonymous"></script>
+    <script defer src = "./js/palavra.js"></script>
+    <title> Caça - Palavras  </title>
+</head>
+<body>
+    <div id="nav" class="navBar">
+        <img src="./assets/imagens/logo.png">
+        <ul class="container">
+            <li class="navItem"><a href="index.html" class="navLink">Início</a></li>
+            <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
+            <li class="navItem"><a href="feedback.html" class="navLink">Feedback</a></li>
+            <li class="navItem"><a href="cruzada.html" class="navLink">Jogo</a></li>
+            <li class="navItem"><a href="login.html" class="navLink">Login</a></li>
+        </ul>
+    </div>
+        <h1> Palavras Cruzadas</h1>
+        <h3> O objetivo dessa Palavra Cruzada é buscar as <br> 5 palavras baseado no tema Wally.</h3>
+
+        <div class="reiniciar">
+            <button id="reiniciarJogo">REINICIAR O CAÇA </button>
+        </div>
+        <br>
+          <script>
+            const botaoReiniciar = document.getElementById('reiniciarJogo');
+            botaoReiniciar.addEventListener('click', reiniciarPagina);
+        
+            function reiniciarPagina() {
+              window.location.href = window.location.href;
+            }
+          </script>
+        <div id="caça">
+            <form id="search" data-js="form">
+                <input data-js="search" type="text">
+                <button>Buscar</button>
+            </form>
+        </div><br>
+       
+    <div class="jogo"> 
+        <table id="table">
+            <tbody data-js="tbody">
+                <tr data-js="line0"></tr>
+                <tr data-js="line1"></tr>
+                <tr data-js="line2"></tr>
+                <tr data-js="line3"></tr>
+                <tr data-js="line4"></tr>
+                <tr data-js="line5"></tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div id="custom-alert" class="alert">
+      <span class="close-btn" onclick="closeAlert()">&times;</span>
+      <p id="alert-message"></p>
+    </div> -->
+    
+    
+</body>
+</html>

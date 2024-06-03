@@ -19,6 +19,9 @@ router.post("/publicar/:idUsuario", function (req, res) {
     feedbackController.publicar(req, res);
 });
 
+router.post("/favoritar/:idFeedback", function (req, res) {
+    feedbackController.favoritar(req, res);
+});
 // router.put("/editar/:idAviso", function (req, res) {
 //     feedbackController.editar(req, res);
 // });

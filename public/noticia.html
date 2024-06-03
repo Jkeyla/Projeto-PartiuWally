@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+<body>
+    <div id="nav" class="navBar">
+        <img src="./assets/imagens/logo.png">
+        <ul class="container">
+            <li class="navItem"><a href="index.html" class="navLink">Início</a></li>
+            <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
+            <li class="navItem"><a href="feedback.html" class="navLink">Feedback</a></li>
+            <li class="navItem"><a href="cruzada.html" class="navLink">Jogo</a></li>
+            <li class="navItem"><a href="noticia.html" class="navLink">Notícias</a></li>
+        </ul>
+    </div>
+    <div id="nav" class="navBar">
+        <img src="./assets/imagens/logo.png">
+        <ul class="container">
+            <li class="navItem"><a href="#meus-feedbacks">Meus Feedbacks</a></li>
+            <li class="navItem"><a href="#feedbacks-favoritados">Feedbacks Favoritados</a></li>
+            <li class="navItem"><a href="#settings">Configurações</a></li>
+            <li class="navItem"><a href="#" onclick="logout()">Sair</a></li>
+        </ul>
+    </div>
+    <div id="main-content">
+        <section id="meus-feedbacks">
+            <h2>Meus Feedbacks</h2>
+            <canvas id="meusFeedbacksChart"></canvas>
+        </section>
+        <section id="feedbacks-favoritos">
+            <h2>Feedbacks Favoritos</h2>
+            <canvas id="feedbacksFavoritosChart"></canvas>
+        </section>
+        <section id="settings">
+            <h2>Configurações</h2>
+        </section>
+    </div>
+</body>
+</html>
+<script>
+window.onload = function() {
+    exibirMeusFeedbacks();
+    exibirFeedbacksFavoritos();
+};
+
+async function exibirMeusFeedbacks() {
+    try {
+        const response = await fetch(`/feedback/meus/${sessionStorage.ID_USUARIO}`);
+        const feedbacks = await response.json();
+        
+        const labels = feedbacks.map(fb => fb.titulo);
+        const data = feedbacks.map(fb => fb.dataHora);
+
+        const ctx = document.getElementById('meusFeedbacksChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Meus Feedbacks',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+    } catch (error) {
+        console.error('Erro ao carregar meus feedbacks:', error);
+    }
+}
+
+async function exibirFeedbacksFavoritos() {
+    try {
+        const response = await fetch(`/feedback/favoritos/${sessionStorage.ID_USUARIO}`);
+        const favoritos = await response.json();
+        
+        const labels = favoritos.map(fb => fb.titulo);
+        const data = favoritos.map(fb => fb.dataHora);
+
+        const ctx = document.getElementById('feedbacksFavoritosChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Feedbacks Favoritos',
+                    data: data,
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+    } catch (error) {
+        console.error('Erro ao carregar feedbacks favoritos:', error);
+    }
+}
+
+function logout() {
+    sessionStorage.clear();
+    window.location.href = 'index.html';
+}
+    // O gráfico é construído com três funções:
+    // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
+    // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
+    // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
+   
+</script>

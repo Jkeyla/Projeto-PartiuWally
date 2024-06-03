@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback</title>
-    <link rel="stylesheet" href="./css/feedback.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="icon" href="./assets/imagens/partiuWally.png">
+    <script src="https://kit.fontawesome.com/b6143907c1.js" crossorigin="anonymous"></script>
+
     <script src="./js/sessao.js"></script>
 </head>
 
@@ -17,8 +19,8 @@
             <li class="navItem"><a href="index.html" class="navLink">Início</a></li>
             <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
             <li class="navItem"><a href="feedback.html" class="navLink">Feedback</a></li>
-            <li class="navItem"><a href="jogo.html" class="navLink">Jogo</a></li>
-            <li class="navItem"><a href="login.html" class="navLink">Login</a></li>
+            <li class="navItem"><a href="cruzada.html" class="navLink">Jogo</a></li>
+            <li class="navItem"><a href="noticia.html" class="navLink">Notícias</a></li>
         </ul>
     </div>
 
@@ -36,6 +38,9 @@
                         <h1>Mural de Feedbacks</h1>
                         <div class="div-results">
                             <div id="feed_container" class="feed-container">
+                                <div class="divButtons">
+                                    <span id="btnFavoritar" class="btn-favoritar"><i class="fas fa-star"></i></span>
+                                  </div>
                             </div>
                         </div>
                     </div>
@@ -62,12 +67,12 @@
 
     function publicar() {
         var idUsuario = sessionStorage.ID_USUARIO;
-        
+
         if (idUsuario == undefined) {
-        window.alert("Para fazer um feedback você precisa estar logado/cadastrado");
-        window.location.href = "/cadastro.html";
-        return false;
-    }
+            window.alert("Para fazer um feedback você precisa estar logado/cadastrado");
+            window.location.href = "/cadastro.html";
+            return false;
+        }
         var corpo = {
             titulo: form_postagem.titulo.value,
             descricao: form_postagem.descricao.value
@@ -167,13 +172,21 @@
                             divDescricao.innerHTML = "Comentario: <b>" + publicacao.descricao + "</b>";
                             spanData.innerHTML = "Data: <b>" + new Date(publicacao.dataHora).toLocaleString();
 
+                            // Assuming Font Awesome 5 is used
+                            divButtons.innerHTML = `<div onclick="star()" 
+                            style= "display: flex; 
+                            flex-direction: row-reverse;
+                            cursor:pointer;
+                            ">
+                                <i class="fas fa-star"></i></div>`;  // Use appropriate class name
+
                             divPublicacao.className = "publicacao";
                             spanTitulo.id = "inputNumero" + publicacao.idFeedback;
                             spanNome.className = "publicacao-nome";
                             spanTitulo.className = "publicacao-titulo";
                             divDescricao.className = "publicacao-descricao";
                             spanData.className = "publicacao-dataHora";
-                            divButtons.className = "div-buttons"
+                            divButtons.className = "divButtons";
 
                             divPublicacao.appendChild(spanID);
                             divPublicacao.appendChild(spanNome);
@@ -223,4 +236,8 @@
     //             </form>
     //         </div></div>`
     //     }
+    function star() {
+  alert("mensagem favoritada!")
+}
+
 </script>

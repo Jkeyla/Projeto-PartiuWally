@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./css/feedback.css">
     <link rel="icon" href="./assets/imagens/partiuWally.png">
     <script src="./js/sessao.js"></script>
+    <script src="https://kit.fontawesome.com/b6143907c1.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body onload="validarSessao(), atualizarFeed()">
@@ -62,12 +64,12 @@
 
     function publicar() {
         var idUsuario = sessionStorage.ID_USUARIO;
-        
+
         if (idUsuario == undefined) {
-        window.alert("Para fazer um feedback você precisa estar logado/cadastrado");
-        window.location.href = "/cadastro.html";
-        return false;
-    }
+            window.alert("Para fazer um feedback você precisa estar logado/cadastrado");
+            window.location.href = "/cadastro.html";
+            return false;
+        }
         var corpo = {
             titulo: form_postagem.titulo.value,
             descricao: form_postagem.descricao.value
@@ -85,7 +87,7 @@
 
             if (resposta.ok) {
                 window.alert("Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!");
-                window.location = "/feedback.html";
+                window.location.href = "dashboard.html";
                 limparFormulario();
                 finalizarAguardar();
             } else if (resposta.status == 404) {
@@ -173,7 +175,7 @@
                             spanTitulo.className = "publicacao-titulo";
                             divDescricao.className = "publicacao-descricao";
                             spanData.className = "publicacao-dataHora";
-                            divButtons.className = "div-buttons"
+                            divButtons.className = "div-buttons" + favoritarFeedback.idFeedback;
 
                             divPublicacao.appendChild(spanID);
                             divPublicacao.appendChild(spanNome);
@@ -223,4 +225,5 @@
     //             </form>
     //         </div></div>`
     //     }
+    
 </script>

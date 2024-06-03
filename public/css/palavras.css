@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* navBar ou Header */
+.navBar {
+    background-color: rgba(244, 230, 230,0.7);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    height: 25px;
+    width: 100%;
+    border-bottom: 3px solid #77D400;
+    font-family: 'Montserrat', sans-serif;
+    /* position: fixed; */
+    /* Torna a navbar fixa */
+    z-index: 1000;
+}
+
+.navBar img {
+    height: 100px;
+    max-height: 350%;
+    margin-top: 40px;
+}
+
+.navLink::before {
+    transition: all .6s;
+    transform: scaleX(0);
+    transform-origin: left;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 3px;
+    border-radius: 2.5px;
+    bottom: -2px;
+    background-color: #77D400;
+}
+
+.navLink:hover::before {
+    transform: scaleX(1);
+}
+/* tela */
+
+
+.navItem {
+    display: flex;
+    align-items: flex-start;
+    margin-right: 100px;
+    /* Adiciona margem à direita */
+    cursor: pointer;
+    position: relative;
+    transition: all .2s ease-in-out;
+}
+
+.navLink {
+    text-decoration: none;
+    color: black;
+
+}
+   
+   *{
+       margin: 0;
+       padding: 0;
+       /* box-sizing: border-box; */
+   }
+   
+   body {
+       overflow-x: hidden;
+       background-image: url(../assets/imagens/fundoMadeira.jpg);
+       font-family: "Roboto Condensed", sans-serif;
+   }
+
+ 
+h1{
+    background-color: #77D400;
+    text-align: center;
+    color: #fff;
+}
+h3{
+    text-align: center;
+    font-size: 32px;
+    margin-top: 5%;
+}
+#texto{
+    display: inline-flex;
+    margin-top: 4%;
+    margin-left: 35%;
+}
+#texto h4{
+    text-align: center;
+    font-size: 32px;
+    padding: 4px;
+}
+#texto h5{
+    text-align: center;
+    font-size: 32px;
+    padding: 4px;
+    color: #77D400;
+}
+.reiniciar{
+    text-align: center;
+    margin-top: 3%;
+}
+#reiniciarJogo {
+    font-size: 20px;
+    color: #FFFF;
+    background-color: #77D400;
+    width: 350px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    /* align-items: center; */
+    justify-content: center;
+
+    font-family:  "Roboto Condensed", sans-serif;
+    border-color: #d5d5d5;
+    color: #000;
+    outline: none;
+    background: transparent;
+}
+#reiniciarJogo:hover{
+    box-shadow: #292929 2px 10px 10px;
+    transition: all .3s ease-in-out;
+}
+
+#caça {
+    margin-top: 2%;
+    text-align: center;
+}
+#search input{
+	width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid #77D400;
+    font-size: 25px;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+}
+#search button{
+    background: transparent;
+    border-radius: 5px;
+    width: 88px;
+    height: 44px;
+    color: #000;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    border: 2px solid #77D400;
+}
+#search button:hover{
+    box-shadow: #292929 2px 10px 10px;
+    transition: all .3s ease-in-out;
+}
+.jogo{ 
+    width: 100%;
+    height: 450px;
+    margin: 0 auto;
+    text-align: center;
+    }
+#table{
+    width: 805px;
+    height: 400px;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #f0eded;
+    border-radius: 10px;
+    border-spacing: 10;
+    background-color:#324A9133;
+    }
+#table td{
+    border-bottom: 8px solid #ebe8e8;
+    border-right: 8px solid #f1ebeb;
+    width: 92px;
+    text-align: center;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 46px;
+    font-size: 30px;
+    letter-spacing: 2.9px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    }
+      
+    .color{
+        background-color: #77D400;
+        transition: 0.5s ease-out;
+    }
+    
+    #table tr:nth-child(10) td{
+        border-bottom: none;
+    }
+    
+    #table td:last-child{
+        border-right: none
+    }
+
+
+/* NAVBAR MENU RESPONSIVA*/
+/* CHECKBOX HACK */
+input[type=checkbox]{
+    display: none;
+   } 
+   

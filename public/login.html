@@ -84,6 +84,8 @@
       } else {
         window.alert("Email ou Senha inválidos, tente novamente ou se for novo cadastre-se");
         console.log("Houve um erro ao tentar realizar o login!");
+        window.location = "login.html";
+
         resposta.text().then(texto => {
           console.error(texto);
           finalizarAguardar(texto);
