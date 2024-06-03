@@ -33,7 +33,6 @@ function autenticar(req, res) {
         // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
         // ARRUMAR
         var nome = req.body.nomeServer;
-        // var cpf = req.body.cpfServer;
         var email = req.body.emailServer;
         var senha = req.body.senhaServer;
         var dtNasc = req.body.dtNascServer;

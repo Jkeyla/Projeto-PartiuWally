@@ -37,7 +37,7 @@ create table favorito (
 
 insert into usuario(nome,email,senha,dtNasc) values
 ("Coraline Lima", "coral.line@gmail.com", "lima2000", "2002-04-20"),
-("Lian Ornelas", "lianOrnelas25@gmail.com", "lian007", "2003-02-25");
+("Samy Choque", "samy25@gmail.com", "samy007", "2003-02-25");
 
 insert into feedback (fkUsuario, titulo, descricao) values 
 (1, 'Melhor que vôley (na minha opinião)', "desde que comecei a jogar, tive mais disponibilidade e soube trabalhar em melhor em equipe"),
@@ -92,13 +92,22 @@ select u.idUsuario,
     from usuario u JOIN feedback f ON idUsuario = fkUsuario where fkUsuario = 1;
     
 -- lista o usuário que deu estrela (favoritou) um feedback 
-select * from favorito JOIN usuario ON fkUsuario = idUsuario
-	JOIN feedback ON fkFeedback = idFeedback ;
-    
-select idUsuario, nome, idFeedback, favorito.dataHora from favorito JOIN usuario ON fkUsuario = idUsuario
+select count(*) from favorito JOIN usuario ON fkUsuario = idUsuario
 	JOIN feedback ON fkFeedback = idFeedback where idUsuario = 1;
     
+select idUsuario, nome, idFeedback, favorito.dataHora from favorito JOIN usuario ON fkUsuario = idUsuario;
 
+select count(*) from favorito 
+	JOIN feedback ON fkFeedback = idFeedback;
+    
+select u.idUsuario,
+    u.nome,
+    u.email,
+    u.senha,
+    f.idFeedback,
+    f.titulo,
+    f.descricao
+    from usuario u JOIN feedback f ON idUsuario = fkUsuario where fkUsuario = 1;
     
 SELECT idUsuario, nome, email, dtNasc FROM usuario WHERE email = 'coral.line@gmail.com' AND senha = 'lima2000';
 

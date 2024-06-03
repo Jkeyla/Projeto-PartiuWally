@@ -14,7 +14,7 @@ function exibirMeusFeedbacks(idUsuario) {
 
 function exibirFeedbacksFavoritos(idUsuario) {
     var instrucaoSql = `
-    select idUsuario, nome, idFeedback, favorito.dataHora from favorito JOIN usuario ON fkUsuario = idUsuario
+    select count(*) as qtde from favorito JOIN usuario ON fkUsuario = idUsuario
 	JOIN feedback ON fkFeedback = idFeedback where idUsuario = ${idUsuario};`;
     return database.executar(instrucaoSql);
 }

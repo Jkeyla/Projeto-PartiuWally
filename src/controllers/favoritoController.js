@@ -11,16 +11,29 @@ async function exibirMeusFeedbacks(idUsuario) {
     }
 }
 
-async function exibirFeedbacksFavoritos(idUsuario) {
-    const favoritos = await favoritoModel.obterFeedbacksFavoritos(idUsuario);
-    if (favoritos) {
-        return favoritos;
-    } else {
-        const error = new Error('Não foi possível obter os feedbacks favoritos do usuário');
-        console.error('Erro ao obter feedbacks favoritos no controller:', error);
-        throw error;
+async function exibirFeedbacksFavoritos(req, res) {
+    const idUsuario = req.params.idUsuario
+    favoritoModel.exibirFeedbacksFavoritos(idUsuario)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "Houve um erro ao buscar os avisos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
     }
-}
 
 module.exports = {
     exibirMeusFeedbacks,

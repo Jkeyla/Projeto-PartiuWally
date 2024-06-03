@@ -64,7 +64,6 @@
 
     function publicar() {
         var idUsuario = sessionStorage.ID_USUARIO;
-
         if (idUsuario == undefined) {
             window.alert("Para fazer um feedback você precisa estar logado/cadastrado");
             window.location.href = "/cadastro.html";
@@ -89,7 +88,7 @@
                 window.alert("Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!");
                 window.location.href = "dashboard.html";
                 limparFormulario();
-                finalizarAguardar();
+                
             } else if (resposta.status == 404) {
                 window.alert("Deu 404!");
             } else {
@@ -97,7 +96,7 @@
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
-            finalizarAguardar();
+            
         });
 
         return false;
@@ -143,7 +142,7 @@
                     if (resposta.status == 204) {
                         var mensagem = document.createElement("span");
                         mensagem.innerHTML = "Nenhum resultado encontrado.";
-                        feed.appendChild(mensagem);
+                        feed.appendChild(resposta);
                         return;
                     }
 
@@ -175,7 +174,7 @@
                             spanTitulo.className = "publicacao-titulo";
                             divDescricao.className = "publicacao-descricao";
                             spanData.className = "publicacao-dataHora";
-                            divButtons.className = "div-buttons" + favoritarFeedback.idFeedback;
+                            // divButtons.className = "div-buttons" + favoritarFeedback.idFeedback;
 
                             divPublicacao.appendChild(spanID);
                             divPublicacao.appendChild(spanNome);
@@ -186,7 +185,7 @@
                             feed.appendChild(divPublicacao);
                         }
 
-                        finalizarAguardar();
+                        
                     });
                 } else {
                     throw ('Houve um erro na API!');
@@ -194,36 +193,10 @@
             })
             .catch(function (erro) {
                 console.error(erro);
-                finalizarAguardar();
+                
             });
     }
 
     // Chamar a função para atualizar o feed quando a página for carregada
     window.onload = atualizarFeed;
-
-    // function publicarFeed() {
-    //         container.innerHTML= `<div class="conteudoPublicar"> <h1>Publicar um feedback</h1>
-    //         <div class="div-form">
-    //             <form id="form_postagem" method="post" onsubmit="return publicar()">
-    //                 <label>
-    //                     Título:
-    //                     <br>
-    //                     <input name="titulo" id="titulo" maxlength="100" type="text">
-    //                 </label>
-    //                 <br>
-    //                 <br>
-    //                 <label>
-    //                     Descrição (máximo de 250 caracteres):
-    //                     <br>
-    //                     <textarea name="descricao" id="descricao" maxlength="250" rows="5"></textarea>
-    //                 </label>
-    //                 <br>
-    //                 <br>
-    //                 <div id="enviar">
-    //                 <button>Enviar</button>
-    //                 </div>
-    //             </form>
-    //         </div></div>`
-    //     }
-    
 </script>

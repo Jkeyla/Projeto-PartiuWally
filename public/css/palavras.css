@@ -70,6 +70,9 @@
        font-family: "Roboto Condensed", sans-serif;
    }
 
+   #palavraCruzada{
+    margin-top: 0;
+   }
  
 h1{
     background-color: #77D400;
@@ -79,7 +82,7 @@ h1{
 h3{
     text-align: center;
     font-size: 32px;
-    margin-top: 5%;
+    margin-top: 2%;
 }
 #texto{
     display: inline-flex;

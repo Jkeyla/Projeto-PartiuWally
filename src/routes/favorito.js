@@ -3,26 +3,17 @@ var router = express.Router();
 
 var favoritoController = require('../controllers/favoritoController');
 
-router.get('/feedback/meus/:idUsuario', async (req, res) => {
-    try {
-        const idUsuario = req.params.idUsuario; // Supondo que a sessão esteja configurada corretamente
-        const feedbacks = await favoritoController.exibirMeusFeedbacks(idUsuario);
-        res.json(feedbacks);
-    } catch (error) {
-        console.error('Erro ao obter meus feedbacks:', error);
-        res.status(500).json({ error: 'Erro ao obter meus feedbacks' });
-    }
-});
+// router.get('/:idUsuario', async (req, res) => {
+//         favoritoController.exibirMeusFeedbacks(req,);
+//         res.json(feedbacks);
+//     } catch (error) {
+//         console.error('Erro ao obter meus feedbacks:', error);
+//         res.status(500).json({ error: 'Erro ao obter meus feedbacks' });
+//     }
+// });
 
-router.get('/favoritos', async (req, res) => {
-    try {
-        const idUsuario = req.params.idUsuario; // Supondo que a sessão esteja configurada corretamente
-        const favoritos = await favoritoController.exibirFeedbacksFavoritos(idUsuario);
-        res.json(favoritos);
-    } catch (error) {
-        console.error('Erro ao obter feedbacks favoritos:', error);
-        res.status(500).json({ error: 'Erro ao obter feedbacks favoritos' });
-    }
+router.get('/:idUsuario', async (req, res) => {
+    favoritoController.exibirFeedbacksFavoritos(req, res);
 });
 
 module.exports = router;
