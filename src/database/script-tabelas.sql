@@ -43,16 +43,28 @@ insert into feedback (fkUsuario, titulo, descricao) values
 (1, 'Melhor que vôley (na minha opinião)', "desde que comecei a jogar, tive mais disponibilidade e soube trabalhar em melhor em equipe"),
 (2, 'Virou parte da minha rotina', "todo domingo depois do culto, junto com jovens da igreja nos reunimos para jogar, amo os domingos");
 
-insert into feedback (fkUsuario, titulo, descricao) values 
-(1, 'competição de Wally', "ontem teve uma competição entre 5 equipes, e ganhamos UHUUL!!");
+ insert into feedback (fkUsuario, titulo, descricao, dataHora) values 
+ (1, 'competição de Wally', "ontem teve uma competição entre 5 equipes, e ganhamos UHUUL!!", "2024-05-10 10:00:00");
 select * from feedback;
 
 insert into favorito (fkUsuario, fkFeedback)values
 (1, 2); 
 
+insert into favorito (fkUsuario, fkFeedback, dataHora)values
+(1, 3, '2024-07-05 12:00:00'); 
+
 select * from favorito;
 select * from feedback;
 select * from usuario;
+
+SELECT DATE_FORMAT(f.dataHora, '%d/%m/%Y') as dataHora_formatada, 
+       COUNT(*) as qtdFeadbacks 
+FROM usuario 
+JOIN feedback f ON idUsuario = fkUsuario 
+WHERE fkUsuario = 1 
+GROUP BY DATE_FORMAT(f.dataHora, '%d/%m/%Y') 
+ORDER BY idUsuario DESC LIMIT 5;
+
 
 
 -- delete from feedback where idFeedback = 9;
@@ -93,13 +105,31 @@ select u.idUsuario,
     
 -- lista o usuário que deu estrela (favoritou) um feedback 
 select count(*) from favorito JOIN usuario ON fkUsuario = idUsuario
-	JOIN feedback ON fkFeedback = idFeedback where idUsuario = 1;
+	JOIN feedback ON fkFeedback = idFeedback where idUsuario = 1 ;
     
 select idUsuario, nome, idFeedback, favorito.dataHora from favorito JOIN usuario ON fkUsuario = idUsuario;
 
 select count(*) from favorito 
-	JOIN feedback ON fkFeedback = idFeedback;
+	JOIN feedback ON fkFeedback = idFeedback ORDER BY fkFeedback DESC LIMIT 5;
     
+select count(*) FROM usuario JOIN feedback f ON idUsuario = fkUsuario where fkUsuario = 1 ORDER BY idUsuario DESC LIMIT 5;
+    
+SELECT DATE_FORMAT(f.dataHora, '%d/%m/%Y') as dataFormatada,
+count(*) as qtd FROM favorito f
+	JOIN usuario ON fkUsuario = idUsuario
+		JOIN feedback ON fkFeedback = idFeedback 
+			where idUsuario = 1
+				GROUP BY DATE_FORMAT(f.dataHora, '%d/%m/%Y') 
+					ORDER BY idUsuario DESC LIMIT 5;
+                    
+SELECT DATE_FORMAT(f.dataHora, '%d/%m/%Y') as dataFormatada,
+count(*) as qtd FROM favorito f
+	JOIN usuario ON fkUsuario = idUsuario
+		JOIN feedback ON fkFeedback = idFeedback 
+			where idUsuario = 1
+				GROUP BY DATE_FORMAT(f.dataHora, '%d/%m/%Y') 
+					ORDER BY idUsuario DESC LIMIT 5;
+                    
 select u.idUsuario,
     u.nome,
     u.email,

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/noticia.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
 </head>
-<body onload="obterDadosGrafico()">
+
+<body onload="obterDadosGrafico(); meusFavoritos()">
     <div id="nav" class="navBar">
         <img src="./assets/imagens/logo.png">
         <ul class="container">
@@ -17,17 +19,10 @@
             <li class="navItem"><a href="dashboard.html" class="navLink">Feedback</a></li>
             <li class="navItem"><a href="cruzada.html" class="navLink">Jogo</a></li>
             <li class="navItem"><a href="noticia.html" class="navLink">Notícias</a></li>
+            <li class="navItem"><a href="index.html" class="navLink" onclick="logout()">Sair</a></li>
         </ul>
     </div>
-    <div id="nav" class="navBar">
-        <img src="./assets/imagens/logo.png">
-        <ul class="container">
-            <li class="navItem"><a href="#meus-feedbacks">Meus Feedbacks</a></li>
-            <li class="navItem"><a href="#feedbacks-favoritados">Feedbacks Favoritados</a></li>
-            <li class="navItem"><a href="#settings">Configurações</a></li>
-            <li class="navItem"><a href="#" onclick="logout()">Sair</a></li>
-        </ul>
-    </div>
+
     <div id="content">
         <section id="meusFeedbacks">
             <h2>Meus Feedbacks</h2>
@@ -38,166 +33,161 @@
             <canvas id="feedbacksFavoritosChart"></canvas>
         </section>
     </div>
-</body> 
+</body>
+
 </html>
 <script>
     var idUsuario = sessionStorage.ID_USUARIO;
 
-function obterDadosGrafico() {
-fetch(`/favorito/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
-    if (response.ok) {
-        response.json().then(function (resposta) {
-            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            resposta.reverse();
+    // exibirMeusFeedbacks
+    function obterDadosGrafico() {
+        fetch(`/favorito/feadback/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
 
-            plotarGrafico(resposta);
+                    exibirGrafico(resposta, idUsuario);
 
-        });
-    } else {
-        console.error('Nenhum dado encontrado ou erro na API');
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
     }
-})
-    .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
-}
 
-function plotarGrafico(resposta) {
+    function exibirGrafico(resposta, idUsuario) {
 
-console.log('iniciando plotagem do gráfico...');
+        console.log('iniciando plotagem do gráfico exibirMeusFeedbacks ...');
 
-// Criando estrutura para plotar gráfico - labels
-let labels = [];
+        // Criando estrutura para plotar gráfico - labels
+        let labels = [];
 
-// Criando estrutura para plotar gráfico - dados
-let dados = {
-    labels: labels,
-    datasets: [{
-        label: 'qtde',
-        data: [],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-    }]
-};
+        // Criando estrutura para plotar gráfico - dados
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label:  'Quantidade de Feedbacks',
+                data: [],
+                fill: false,
+                borderColor: '#fff',
+                backgroundColor: '#9BD0F5',
+                tension: 0.1
+            }]
+        };
 
-console.log('----------------------------------------------')
-console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-console.log(resposta)
+        console.log('----------------------------------------------')
+        console.log(resposta)
 
-// Inserindo valores recebidos em estrutura para plotar o gráfico
-for (i = 0; i < resposta.length; i++) {
-    var registro = resposta[i];
-    labels.push(registro.momento_grafico);
-    dados.datasets[0].data.push(registro.qtde);
-}
+        // Inserindo valores recebidos em estrutura para plotar o gráfico
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            dados.labels.push(registro.dataHora_formatada)
+            dados.datasets[0].data.push(registro.qtdFeadbacks);
+        }
 
-console.log('----------------------------------------------')
-console.log('O gráfico será plotado com os respectivos valores:')
-console.log('Labels:')
-console.log(labels)
-console.log('Dados:')
-console.log(dados.datasets)
-console.log('----------------------------------------------')
+        console.log('----------------------------------------------')
+        console.log('O gráfico exibirMeusFeedbacks será plotado com os respectivos valores:')
+        console.log('Labels:')
+        console.log(labels)
+        console.log('Dados:')
+        console.log(dados.datasets)
+        console.log('----------------------------------------------')
 
-// Criando estrutura para plotar gráfico - config
-const config = {
-    type: 'bar',
-    data: dados,
-};
+        // Criando estrutura para plotar gráfico - config
+        const config = {
+            type: 'bar',
+            data: dados,
+        };
 
-// Adicionando gráfico criado em div na tela
-let myChart = new Chart(
-    document.querySelector("#feedbacksFavoritosChart"),
-    config
-);
-
-// setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-}
-
-
-// function obterDadosGrafico() {
-// fetch(`/feedback/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
-//     if (response.ok) {
-//         response.json().then(function (resposta) {
-//             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-//             resposta.reverse();
-
-//             plotarGrafico(resposta);
-
-//         });
-//     } else {
-//         console.error('Nenhum dado encontrado ou erro na API');
-//     }
-// })
-//     .catch(function (error) {
-//         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-//     });
-// }
-
-// function plotarGrafico(resposta) {
-
-// console.log('iniciando plotagem do gráfico...');
-
-// // Criando estrutura para plotar gráfico - labels
-// let labels = [];
-
-// // Criando estrutura para plotar gráfico - dados
-// let dados = {
-//     labels: labels,
-//     datasets: [{
-//         label: 'qtde',
-//         data: [],
-//         fill: false,
-//         borderColor: 'rgb(75, 192, 192)',
-//         tension: 0.1
-//     }]
-// };
-
-// console.log('----------------------------------------------')
-// console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-// console.log(resposta)
-
-// // Inserindo valores recebidos em estrutura para plotar o gráfico
-// for (i = 0; i < resposta.length; i++) {
-//     var registro = resposta[i];
-//     labels.push(registro.momento_grafico);
-//     dados.datasets[0].data.push(registro.qtde);
-// }
-
-// console.log('----------------------------------------------')
-// console.log('O gráfico será plotado com os respectivos valores:')
-// console.log('Labels:')
-// console.log(labels)
-// console.log('Dados:')
-// console.log(dados.datasets)
-// console.log('----------------------------------------------')
-
-// // Criando estrutura para plotar gráfico - config
-// const config = {
-//     type: 'line',
-//     data: dados,
-// };
-
-// // Adicionando gráfico criado em div na tela
-// let myChart = new Chart(
-//     document.querySelector("#meus-feedbacks"),
-//     config
-// );
-
-// // setTimeout(() => atualizarGrafico(idAquario, dados, myChart), 2000);
-// }
+        // Adicionando gráfico criado em div na tela
+        const myChart = new Chart(
+            document.querySelector(`#meusFeedbacksChart`),
+            config
+        );
+    }
 
 
 
+    function meusFavoritos() {
+        fetch(`/favorito/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
 
-function logout() {
-    sessionStorage.clear();
-    window.location.href = 'index.html';
-}
-    // O gráfico é construído com três funções:
-    // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
-    // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
-    // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
+                    plotarGrafico(resposta, idUsuario);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarGrafico(resposta, idUsuario) {
+
+        console.log('iniciando plotagem do gráfico...');
+
+        // Criando estrutura para plotar gráfico - labels
+        let labels = [];
+
+        // Criando estrutura para plotar gráfico - dados
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Quantidade de Favoritos',
+                data: [],
+                fill: false,
+                borderColor: 'rgb(199, 52, 52)',
+                tension: 0.1
+            }]
+        };
+
+        console.log('----------------------------------------------')
+        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+        // Inserindo valores recebidos em estrutura para plotar o gráfico
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            // dados.labels.push(registro.qtde);
+            dados.labels.push(registro.dataFormatada)
+            dados.datasets[0].data.push(registro.qtd);
+        }
+
+        console.log('----------------------------------------------')
+        console.log('O gráfico será plotado com os respectivos valores:')
+        console.log('Labels:')
+        console.log(labels)
+        console.log('Dados:')
+        console.log(dados.datasets)
+        console.log('----------------------------------------------')
+
+        // Criando estrutura para plotar gráfico - config
+        const config = {
+            type: 'line',
+            data: dados,
+        };
+
+        // Adicionando gráfico criado em div na tela
+        const myChart = new Chart(
+            document.querySelector(`#feedbacksFavoritosChart`),
+            config
+        );
+    }
+
+
+    function logout() {
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
    
+
 </script>

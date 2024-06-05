@@ -1,25 +1,40 @@
 var database = require("../database/config");
 
-function exibirMeusFeedbacks(idUsuario) {
-    var instrucaoSql = `select u.idUsuario,
-    u.nome,
-    u.email,
-    u.senha,
-    f.idFeedback,
-    f.titulo,
-    f.descricao
-    from usuario u JOIN feedback f ON idUsuario = fkUsuario where fkUsuario = ${idUsuario};`;
+function exibirMeusFeedbacks(idUsuario, limite_linhas) {
+    var instrucaoSql = `
+    SELECT DATE_FORMAT(f.dataHora, '%d/%m/%Y') as dataHora_formatada, 
+       COUNT(*) as qtdFeadbacks 
+FROM usuario 
+JOIN feedback f ON idUsuario = fkUsuario 
+WHERE fkUsuario = ${idUsuario}
+GROUP BY DATE_FORMAT(f.dataHora, '%d/%m/%Y') 
+ORDER BY idUsuario DESC LIMIT ${limite_linhas};`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function exibirFeedbacksFavoritos(idUsuario) {
+function exibirFeedbacksFavoritos(idUsuario, limite_linhas) {
     var instrucaoSql = `
-    select count(*) as qtde from favorito JOIN usuario ON fkUsuario = idUsuario
-	JOIN feedback ON fkFeedback = idFeedback where idUsuario = ${idUsuario};`;
+    SELECT 
+    DATE_FORMAT(f.dataHora, '%d/%m/%Y') AS dataFormatada,
+    COUNT(*) AS qtd 
+FROM 
+    favorito f
+JOIN 
+    usuario ON f.fkUsuario = usuario.idUsuario
+JOIN 
+    feedback ON f.fkFeedback = feedback.idFeedback 
+WHERE 
+    usuario.idUsuario = ${idUsuario}
+GROUP BY 
+    dataFormatada
+ORDER BY 
+    dataFormatada desc limit ${limite_linhas}`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 module.exports = {
     exibirMeusFeedbacks,
     exibirFeedbacksFavoritos
-};
+}; 

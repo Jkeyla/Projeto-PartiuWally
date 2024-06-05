@@ -85,12 +85,19 @@
                 </div>
             </div>
         </div>
-        <div class="logosONU">
-            <img class="logos" src="./assets/imagens/partiuWally.png" height="95px">
-            <img class="logos" src="./assets/imagens/onu.png" height="95px">
-            <img class="logos" src="./assets/imagens/ods.png" height="95px">
-            <img class="logos" src="./assets/imagens/ods3.jpg" height="95px">
+        <div id="logosONU" class="logosONU">
         </div>
 </body>
 
 </html>
+<script>
+    const img = {
+        link: ["./assets/imagens/partiuWally.png", 
+        "./assets/imagens/onu.png", 
+        "./assets/imagens/ods.png",
+        "./assets/imagens/ods3.jpg"]
+    }
+    for (let position = 0; position<listaDeImg.link.length; position+=1){
+        logosONU.innerHTML += `<img class="logos" src="${listaDeImg.link[position]}" height="95px">`
+    }
+</script>
