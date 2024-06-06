@@ -16,13 +16,14 @@
 			return indexes[i];
 			
 		}
+		else{
 		$search.value = '';
 		swal({
 			title: "Caça Palavras",
 			text: "Palavra não encontrada",
 			icon: "error"
 		  });
-		return false;
+		return false;}
 	}
 
 	function selectTd( line , column ){

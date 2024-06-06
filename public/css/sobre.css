@@ -3,7 +3,7 @@
 
 /* navBar ou Header */
 .navBar {
-    background-color: rgba(244, 230, 230,0.7);
+    background-color: rgba(244, 230, 230, 0.7);
     display: flex;
     justify-content: space-between;
     padding: 20px;
@@ -65,34 +65,62 @@ body {
     margin: 0;
     background-image: url(../assets/imagens/telaPapel.jpg);
 }
-.telaSobre{
+
+.telaSobre {
     display: flex;
     position: absolute;
     font-family: "Roboto Condensed", sans-serif;
     justify-content: space-around;
     align-items: center;
     /* padding-top: 2%; */
-    
+
 }
-.conteudoTitulo{
+
+.conteudoTitulo {
     width: 60%;
     display: flex;
     flex-direction: column;
     padding: 30px;
 }
 
-.conteudoTitulo h1{
+.conteudoTitulo h1 {
     font-size: 36px;
     font-weight: normal;
 }
 
-.conteudoTitulo p{
+.conteudoTitulo p {
     font-size: 20px;
 }
-.fotos{
+
+.wallyVideo {
+    display: flex;
+    margin-top: 100px;
+    padding-right: 25px;
+}
+
+/* #wallyVideo {
+    position: relative;
+    width: 300px;
+    left: -10px;
+    top: 30px;
+    padding-right: 15px;
+    border-radius: 30px;
+}
+
+#wallyVideoShashy {
+    position: relative;
+    top: 30px;
+    width: 300px;
+    right: 10px;
+    border-radius: 30px;
+
+} */
+
+.fotos {
     display: flex;
     width: 60%;
     justify-content: flex-end;
     margin-top: 100px;
-    padding-right: 50px;;
+    padding-right: 50px;
+    ;
 }

@@ -32,12 +32,22 @@
                     trabalho em equipe. É um jogo onde todos podem participar e sempre há espaço para mais um. Eu
                     simplesmente amo Wally.</p>
             </div>
-            <div class="fotos">
-                <img id="wally5" src="./assets/imagens/wally5.svg">
-                <!-- <img id="wally3" src="../assets/imagens/wally5.svg"> -->
-            </div>
+            <div id="videos" class="wallyVideo"></div>
+
         </div>
     </div>
 </body>
-
 </html>
+<script>
+    const videosWally = {
+        videos: ["./assets/Video_65274996.mp4",
+            "./assets/20230716_162029.mp4"]
+    }
+    for(let position=0; position<videosWally.videos.length; position +=1){
+        videos.innerHTML += `<video class="wallyVideo" src="${videosWally.videos[position]}"
+                controls width="250"
+                autoplay
+                muted>
+                </video>`
+    }
+</script>
