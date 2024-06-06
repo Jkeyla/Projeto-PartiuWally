@@ -18,6 +18,7 @@ function limparSessao() {
     window.location = "../login.html";
 }
 
+// botão fzr feeling
 function publicarFeed() {
     const container = document.getElementById('container');
     container.innerHTML = `
@@ -49,6 +50,6 @@ function publicarFeed() {
 
 function publicar() {
     // Implementação da função de publicação
-    console.log("Publicar feedback");
+    console.log("Publicar feeling");
     return false; // Retorne false para evitar o envio do formulário durante o teste
 }

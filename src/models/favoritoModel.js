@@ -1,3 +1,4 @@
+const { favoritar } = require("../controllers/favoritoController");
 var database = require("../database/config");
 
 function exibirMeusFeedbacks(idUsuario, limite_linhas) {
@@ -17,7 +18,7 @@ function exibirFeedbacksFavoritos(idUsuario, limite_linhas) {
     var instrucaoSql = `
     SELECT 
     DATE_FORMAT(f.dataHora, '%d/%m/%Y') AS dataFormatada,
-    COUNT(*) AS qtd 
+    SUM(f.favoritado) AS qtd 
 FROM 
     favorito f
 JOIN 
@@ -34,7 +35,38 @@ ORDER BY
     return database.executar(instrucaoSql);
 }
 
+function verificar(idUsuario, idFeedback) {
+    var instrucaoSql = `
+    SELECT 
+    *
+FROM 
+    favorito f
+WHERE 
+    fkUsuario = ${idUsuario} AND fkFeedback = ${idFeedback}
+    ; `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function atualizar(favoritado, idUsuario, idFeedback) {
+    var instrucaoSql = `
+    UPDATE favorito f SET favoritado = ${favoritado}, dataHora = now() WHERE fkUsuario = ${idUsuario} 
+        AND fkFeedback = ${idFeedback}`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function inserir(idUsuario, idFeedback) {
+    var instrucaoSql = `
+    insert into favorito (fkUsuario, fkFeedback, favoritado)values
+ (${idUsuario}, ${idFeedback}, 1)`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 module.exports = {
     exibirMeusFeedbacks,
-    exibirFeedbacksFavoritos
+    exibirFeedbacksFavoritos,
+    verificar,
+    inserir,
+    atualizar
 }; 

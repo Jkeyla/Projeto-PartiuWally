@@ -2,6 +2,7 @@ var dashboardModel = require("../models/dashboardModel");
 
 function listar(req, res) {
     dashboardModel.listar().then(function (resultado) {
+        
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -13,31 +14,6 @@ function listar(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
-
-// function listarPorUsuario(req, res) {
-//     var idUsuario = req.params.idUsuario;
-
-//     dashboardModel.listarPorUsuario(idUsuario)
-//         .then(
-//             function (resultado) {
-//                 if (resultado.length > 0) {
-//                     res.status(200).json(resultado);
-//                 } else {
-//                     res.status(204).send("Nenhum resultado encontrado!");
-//                 }
-//             }
-//         )
-//         .catch(
-//             function (erro) {
-//                 console.log(erro);
-//                 console.log(
-//                     "Houve um erro ao buscar os avisos: ",
-//                     erro.sqlMessage
-//                 );
-//                 res.status(500).json(erro.sqlMessage);
-//             }
-//         );
-// }
 
 
 function publicar(req, res) {
@@ -70,7 +46,6 @@ function publicar(req, res) {
 
 module.exports = {
     listar,
-    // listarPorUsuario,
     publicar
     // editar,
     // deletar

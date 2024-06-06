@@ -334,7 +334,6 @@ textarea {
     transition: all .3s ease-in-out;
 }
 
-  
-  .divButtons::after:click {
-    color: yellow; /* Active color: yellow */
-  }
+.cheia{
+    color: yellow;
+}

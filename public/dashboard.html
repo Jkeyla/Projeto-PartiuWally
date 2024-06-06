@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback</title>
+    <title>Feeling</title>
     <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="icon" href="./assets/imagens/partiuWally.png">
     <script src="https://kit.fontawesome.com/b6143907c1.js" crossorigin="anonymous"></script>
@@ -12,15 +12,15 @@
     <script src="./js/sessao.js"></script>
 </head>
 
-<body  onload="validarSessao(), atualizarFeed()">
+<body onload="validarSessao(), atualizarFeed()">
     <div id="nav" class="navBar">
         <img src="./assets/imagens/logo.png">
         <ul class="container">
             <li class="navItem"><a href="index.html" class="navLink">Início</a></li>
             <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
-            <li class="navItem"><a href="dashboard.html" class="navLink">Feedback</a></li>
+            <li class="navItem"><a href="dashboard.html" class="navLink">Feeling</a></li>
             <li class="navItem"><a href="cruzada.html" class="navLink">Jogo</a></li>
-            <li class="navItem"><a href="noticia.html" class="navLink">Notícias</a></li>
+            <li class="navItem"><a href="noticia.html" class="navLink">Meus</a></li>
         </ul>
     </div>
 
@@ -35,7 +35,7 @@
             <div class="telaFeedback">
                 <div class="contentFeed">
                     <div class="carrossel">
-                        <h1>Mural de Feedbacks</h1>
+                        <h1>Mural de Feelings</h1>
                         <div class="div-results">
                             <div id="feed_container" class="feed-container">
                                 <div class="divButtons">
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div id="btn" class="botao">
-                <button onclick="publicarFeed()">Fazer Feedback</button>
+                <button onclick="publicarFeed()">Fazer Feeling</button>
             </div>
         </div>
     </div>
@@ -60,16 +60,18 @@
 
 <script>
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    let starControll = 0;
 
     function limparFormulario() {
         document.getElementById("form_postagem").reset();
     }
-
+    
     function publicar() {
-        var idUsuario = sessionStorage.ID_USUARIO;
 
         if (idUsuario == undefined) {
-            window.alert("Para fazer um feedback você precisa estar logado/cadastrado");
+            window.alert("Para fazer um Feeling você precisa estar logado/cadastrado");
             window.location.href = "/cadastro.html";
             return false;
         }
@@ -104,7 +106,35 @@
         return false;
 
     }
-
+    // botão fzr feeling
+    function publicarFeed() {
+        const container = document.getElementById('container');
+        container.innerHTML = `
+                                <div class="conteudoPublicar">
+                                    <h1>Publicar um Feeling</h1>
+                                    <div class="div-form">
+                                        <form id="form_postagem" method="post" onsubmit="return publicar()">
+                                            <label>
+                                                Título:
+                                                <br>
+                                                <input name="titulo" id="titulo" maxlength="100" type="text">
+                                            </label>
+                                            <br>
+                                            <br>
+                                            <label>
+                                                Descrição (máximo de 250 caracteres):
+                                                <br>
+                                                <textarea name="descricao" id="descricao" maxlength="250" rows="5"></textarea>
+                                            </label>
+                                            <br>
+                                            <br>
+                                            <div id="enviar">
+                                                <button type="submit">Enviar</button>
+                                            </div>
+                                            </form>
+                                            </div>
+                                </div>`;
+    }
     function atualizarFeed() {
         fetch("/dashboard/listar")
             .then(function (resposta) {
@@ -126,6 +156,7 @@
                         for (let posicao = 0; posicao < resposta.length; posicao++) {
                             var publicacao = resposta[posicao];
 
+
                             var divPublicacao = document.createElement("div");
                             var spanID = document.createElement("span");
                             var spanTitulo = document.createElement("span");
@@ -134,6 +165,7 @@
                             var divDescricao = document.createElement("div");
                             var divButtons = document.createElement("div");
 
+
                             spanID.innerHTML = "Feed: <b>" + publicacao.idFeedback + "</b>";
                             spanTitulo.innerHTML = "Assunto: <b>" + publicacao.titulo + "</b>";
                             spanNome.innerHTML = "Autor: <b>" + publicacao.nome + "</b>";
@@ -141,12 +173,7 @@
                             spanData.innerHTML = "Data: <b>" + new Date(publicacao.dataHora).toLocaleString();
 
                             // Assuming Font Awesome 5 is used
-                            divButtons.innerHTML = `<div onclick="star()" 
-                            style= "display: flex; 
-                            flex-direction: row-reverse;
-                            cursor:pointer;
-                            ">
-                            <i class="fas fa-star"></i></div>`;  // star
+                            // star
 
                             divPublicacao.className = "publicacao";
                             spanTitulo.id = "inputNumero" + publicacao.idFeedback;
@@ -154,18 +181,23 @@
                             spanTitulo.className = "publicacao-titulo";
                             divDescricao.className = "publicacao-descricao";
                             spanData.className = "publicacao-dataHora";
-                            divButtons.className = "divButtons";
+
 
                             divPublicacao.appendChild(spanID);
                             divPublicacao.appendChild(spanNome);
                             divPublicacao.appendChild(spanTitulo);
                             divPublicacao.appendChild(divDescricao);
-                            divPublicacao.appendChild(divButtons);
                             divPublicacao.appendChild(spanData);
+
+                            verificarFavorito(idUsuario, publicacao.idFeedback, divPublicacao, divButtons)
+
                             feed.appendChild(divPublicacao);
+
+
+
                         }
 
-    
+
                     });
                 } else {
                     throw ('Houve um erro na API!');
@@ -176,10 +208,49 @@
             });
     }
 
-    window.onload = atualizarFeed;
 
-    function star() {
-        alert("mensagem favoritada!")
+
+    function verificarFavorito(idUsuario, idFeedback, divPublicacao, divButtons) {
+        fetch(`/favorito/verificar/${idFeedback}/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(
+                    function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                        divButtons.innerHTML = `<div onclick="star(estrela${idFeedback}  )" 
+                            style= "display: flex; 
+                            flex-direction: row-reverse;
+                            cursor:pointer;
+                            ">
+                            <i id="estrela${idFeedback}" class="fas fa-star ${resposta[0].favoritado == 1 ? 'cheia' : ''}"></i></div>`;
+
+                        divButtons.className = "divButtons";
+
+                        divPublicacao.appendChild(divButtons);
+
+
+                        resposta.reverse();
+                    });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
     }
 
+    function star(estrelaClicada) {
+        if (starControll == 0) {
+            starControll = 1
+            estrelaClicada.classList.add('cheia')
+        }
+        else {
+            starControll = 0;
+            estrelaClicada.classList.remove('cheia');
+        }
+
+    }
+
+    window.onload = atualizarFeed;
 </script>

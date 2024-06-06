@@ -7,11 +7,6 @@ router.get("/listar", function (req, res) {
     dashboardController.listar(req, res);
 });
 
-router.get("/listar/:idUsuario", function (req, res) {
-    dashboardController.listarPorUsuario(req, res);
-});
-
-
 router.post("/publicar/:idUsuario", function (req, res) {
     dashboardController.publicar(req, res);
 });

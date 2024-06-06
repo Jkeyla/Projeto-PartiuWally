@@ -15,7 +15,7 @@
         <ul class="container">
             <li class="navItem"><a href="index.html" class="navLink">Início</a></li>
             <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
-            <li class="navItem"><a href="feedback.html" class="navLink">Feedback</a></li>
+            <li class="navItem"><a href="feedback.html" class="navLink">Feeling</a></li>
             <li class="navItem"><a href="cadastro.html" class="navLink">Cadastro</a></li>
             <li class="navItem"><a href="login.html" class="navLink">Login</a></li>
         </ul>
@@ -85,19 +85,18 @@
                 </div>
             </div>
         </div>
-        <div id="logosONU" class="logosONU">
-        </div>
+        <div id="logosONU" class="logosONU"></div>
 </body>
 
 </html>
 <script>
-    const img = {
+    const listaDeImg = {
         link: ["./assets/imagens/partiuWally.png", 
         "./assets/imagens/onu.png", 
         "./assets/imagens/ods.png",
         "./assets/imagens/ods3.jpg"]
     }
     for (let position = 0; position<listaDeImg.link.length; position+=1){
-        logosONU.innerHTML += `<img class="logos" src="${listaDeImg.link[position]}" height="95px">`
+        logosONU.innerHTML += `<img class="logosONU" src="${listaDeImg.link[position]}" height="95px">`
     }
 </script>

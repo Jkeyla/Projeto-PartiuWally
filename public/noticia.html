@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Meus</title>
     <link rel="stylesheet" href="./css/noticia.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -16,20 +16,20 @@
         <ul class="container">
             <li class="navItem"><a href="index.html" class="navLink">Início</a></li>
             <li class="navItem"><a href="sobremim.html" class="navLink">Sobre mim</a></li>
-            <li class="navItem"><a href="dashboard.html" class="navLink">Feedback</a></li>
+            <li class="navItem"><a href="dashboard.html" class="navLink">Feeling</a></li>
             <li class="navItem"><a href="cruzada.html" class="navLink">Jogo</a></li>
-            <li class="navItem"><a href="noticia.html" class="navLink">Notícias</a></li>
+            <li class="navItem"><a href="noticia.html" class="navLink">Meus</a></li>
             <li class="navItem"><a href="index.html" class="navLink" onclick="logout()">Sair</a></li>
         </ul>
     </div>
 
     <div id="content">
         <section id="meusFeedbacks">
-            <h2>Meus Feedbacks</h2>
+            <h2>Meus Feeling</h2>
             <canvas id="meusFeedbacksChart"></canvas>
         </section>
         <section id="feedbacksFavoritos">
-            <h2>Feedbacks Favoritos</h2>
+            <h2>Feeling Favoritos</h2>
             <canvas id="feedbacksFavoritosChart"></canvas>
         </section>
     </div>
@@ -39,7 +39,7 @@
 <script>
     var idUsuario = sessionStorage.ID_USUARIO;
 
-    // exibirMeusFeedbacks
+    // exibirMeusFeelings
     function obterDadosGrafico() {
         fetch(`/favorito/feadback/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
@@ -65,16 +65,17 @@
 
         // Criando estrutura para plotar gráfico - labels
         let labels = [];
-
+        Chart.defaults.font.size = 18;
+        Chart.defaults.color = '#000';
         // Criando estrutura para plotar gráfico - dados
         let dados = {
             labels: labels,
             datasets: [{
-                label:  'Quantidade de Feedbacks',
+                label: 'Quantidade de Feelings',
                 data: [],
                 fill: false,
-                borderColor: '#fff',
-                backgroundColor: '#9BD0F5',
+                borderColor: '#000',
+                backgroundColor: '#cc5ffd',
                 tension: 0.1
             }]
         };
@@ -90,7 +91,7 @@
         }
 
         console.log('----------------------------------------------')
-        console.log('O gráfico exibirMeusFeedbacks será plotado com os respectivos valores:')
+        console.log('O gráfico exibirMeusFeeling será plotado com os respectivos valores:')
         console.log('Labels:')
         console.log(labels)
         console.log('Dados:')
@@ -137,6 +138,8 @@
 
         // Criando estrutura para plotar gráfico - labels
         let labels = [];
+        Chart.defaults.font.size = 18;
+        Chart.defaults.color = '#000';
 
         // Criando estrutura para plotar gráfico - dados
         let dados = {
@@ -145,7 +148,9 @@
                 label: 'Quantidade de Favoritos',
                 data: [],
                 fill: false,
-                borderColor: 'rgb(199, 52, 52)',
+                borderColor: '#FF6384',
+                backgroundColor: '#fffb60',
+
                 tension: 0.1
             }]
         };
@@ -172,7 +177,7 @@
 
         // Criando estrutura para plotar gráfico - config
         const config = {
-            type: 'line',
+            type: 'bar',
             data: dados,
         };
 
@@ -188,6 +193,6 @@
         sessionStorage.clear();
         window.location.href = 'index.html';
     }
-   
+
 
 </script>
