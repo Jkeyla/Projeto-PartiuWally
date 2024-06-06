@@ -67,7 +67,7 @@
     function limparFormulario() {
         document.getElementById("form_postagem").reset();
     }
-    
+
     function publicar() {
 
         if (idUsuario == undefined) {
@@ -110,10 +110,10 @@
     function publicarFeed() {
         const container = document.getElementById('container');
         container.innerHTML = `
-                                <div class="conteudoPublicar">
-                                    <h1>Publicar um Feeling</h1>
-                                    <div class="div-form">
-                                        <form id="form_postagem" method="post" onsubmit="return publicar()">
+        <div class="conteudoPublicar">
+            <h1>Publicar um Feeling</h1>
+                <div class="div-form">
+                    <form id="form_postagem" method="post" onsubmit="return publicar()">
                                             <label>
                                                 Título:
                                                 <br>
@@ -154,6 +154,7 @@
                         var feed = document.getElementById("feed_container");
                         feed.innerHTML = "";
                         for (let posicao = 0; posicao < resposta.length; posicao++) {
+
                             var publicacao = resposta[posicao];
 
 
@@ -213,24 +214,44 @@
     function verificarFavorito(idUsuario, idFeedback, divPublicacao, divButtons) {
         fetch(`/favorito/verificar/${idFeedback}/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
-                response.json().then(
-                    function (resposta) {
-                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                console.log(response.status)
+                if (response.status == 200) {
+                    response.json().then(
+                        function (resposta) {
+                            starControll = resposta[0].favoritado
 
-                        divButtons.innerHTML = `<div onclick="star(estrela${idFeedback}  )" 
-                            style= "display: flex; 
-                            flex-direction: row-reverse;
-                            cursor:pointer;
-                            ">
-                            <i id="estrela${idFeedback}" class="fas fa-star ${resposta[0].favoritado == 1 ? 'cheia' : ''}"></i></div>`;
+                            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-                        divButtons.className = "divButtons";
+                            divButtons.innerHTML = `<div onclick="star(estrela${idFeedback}, ${starControll},
+                                ${idFeedback}
+                              )" 
+                                style= "display: flex; 
+                                flex-direction: row-reverse;
+                                cursor:pointer;
+                                ">
+                                <i id="estrela${idFeedback}" class="fas fa-star ${starControll == 1 ? 'cheia' : ''}"></i></div>`;
 
-                        divPublicacao.appendChild(divButtons);
+                            divButtons.className = "divButtons";
+
+                            divPublicacao.appendChild(divButtons);
 
 
-                        resposta.reverse();
-                    });
+                            resposta.reverse();
+                        });
+                } else if (response.status == 204) {
+                    starControll = false;
+                    divButtons.innerHTML = `<div onclick="star(estrela${idFeedback},${starControll},
+                    ${idFeedback})" 
+                                style= "display: flex; 
+                                flex-direction: row-reverse;
+                                cursor:pointer;
+                                ">
+                                <i id="estrela${idFeedback}" class="fas fa-star ${starControll == 1 ? 'cheia' : ''}"></i></div>`;
+
+                    divButtons.className = "divButtons";
+
+                    divPublicacao.appendChild(divButtons);
+                }
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
             }
@@ -240,17 +261,53 @@
             });
     }
 
-    function star(estrelaClicada) {
-        if (starControll == 0) {
-            starControll = 1
-            estrelaClicada.classList.add('cheia')
-        }
-        else {
-            starControll = 0;
+    function star(estrelaClicada, starStatus, idFeedback) {
+        console.log(starStatus)
+        starControll = starStatus;
+        if (starControll) {
+            
             estrelaClicada.classList.remove('cheia');
         }
+        else {
+            estrelaClicada.classList.add('cheia')
+        }
+        starControll = !starControll
+        console.log(starControll)
+        console.log(idFeedback)
+        console.log(idUsuario)
+        fetch(`/favorito/favoritar`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                idUsuario: idUsuario,
+                idFeed: idFeedback,
+                favoritadoBanco: starControll
+
+            }),
+        })
+            .then(function (resposta) {
+
+                if (resposta.ok) {
+                    atualizarFeed();
+                    resposta.json().then(
+                        function (res){
+                            console.log(res)
+                        }
+                    )
+                } else {
+                    throw "Houve um erro ao tentar realizar o feed!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
 
     }
 
-    window.onload = atualizarFeed;
+
+    // window.onload = atualizarFeed;
 </script>

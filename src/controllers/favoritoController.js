@@ -87,16 +87,27 @@ function verificar(req, res) {
 
 function favoritar(req, res) {
 
-    const limite_linhas = 5;
+    // const limite_linhas = 5;
 
-    const idUsuario = req.params.idUsuario
-    favoritoModel.verificar(idUsuario, limite_linhas)
+    const idUsuario = req.body.idUsuario
+    const idFeed = req.body.idFeed;
+    const favoritadoBanco = req.body.favoritadoBanco;
+    
+    favoritoModel.verificar(idUsuario, idFeed)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
-                    res.status(200).json(resultado);
-                } else {
-                    res.status(204).send("Nenhum resultado encontrado!");
+                    favoritoModel.atualizar(favoritadoBanco, idUsuario, idFeed).then(
+                        function (resultadoAtualizar) {
+                            res.json(resultadoAtualizar);
+                        }
+                    )
+                } else if (resultado.length == 0){
+                    favoritoModel.inserir(idUsuario, idFeed).then(
+                        function (resultadoInserir) {
+                            res.json(resultadoInserir);
+                        }
+                    )
                 }
             }
         )
