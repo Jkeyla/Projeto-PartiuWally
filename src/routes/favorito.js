@@ -20,5 +20,13 @@ router.post("/favoritar", function (req, res) {
 });
 
 
+router.get("/totalFeed/:idUsuario", function (req, res) {
+    console.log('na rota',idUsuario)
+    favoritoController.buscarTotalFeed(req, res);
+});
+
+// router.get("/totalFav/:idUsuario", function (req, res) {
+//     favoritoController.buscarTotalFav(req, res);
+// });
 
 module.exports = router;

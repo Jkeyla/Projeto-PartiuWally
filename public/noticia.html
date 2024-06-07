@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus</title>
     <link rel="stylesheet" href="./css/noticia.css">
+    <link rel="icon" href="./assets/imagens/partiuWally.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
-<body onload="obterDadosGrafico(); meusFavoritos()">
+<body onload="obterDadosGrafico(); meusFavoritos(); buscarTotalFeed();">
     <div id="nav" class="navBar">
         <img src="./assets/imagens/logo.png">
         <ul class="container">
@@ -24,40 +25,92 @@
     </div>
 
     <div id="content">
-        <section id="meusFeedbacks">
-            <h2>Meus Feeling</h2>
-            <canvas id="meusFeedbacksChart"></canvas>
-        </section>
-        <section id="feedbacksFavoritos">
-            <h2>Feeling Favoritos</h2>
-            <canvas id="feedbacksFavoritosChart"></canvas>
-        </section>
+        <div class="meus">
+            <section id="meusFeedbacks">
+                <h2>Meus Feelings</h2>
+                <canvas id="meusFeedbacksChart"></canvas>
+            </section>
+            <section id="feedbacksFavoritos">
+                <h2>Meus Feelings Favoritos</h2>
+                <canvas id="feedbacksFavoritosChart"></canvas>
+            </section>
+        </div>
+        <div class="indicadores">
+            <div class="totalFeedClass" id="totalFeed"></div>
+            <div class="totalFavClass" id="totalFav"></div>
+        </div>
     </div>
 </body>
 
 </html>
 <script>
-    var idUsuario = sessionStorage.ID_USUARIO;
+    let idUsuario = sessionStorage.ID_USUARIO;
+
+    function buscarTotalFeed() {
+        return fetch(`/favorito/totalFeed/${idUsuario}`, {
+            method: 'GET'
+        }).then(function (resposta) {
+            console.log('resposta', resposta)
+            return resposta.json().then((favorito) => {
+                const totalFeed = favorito[0].fav;
+                document.querySelector('.totalFeedClass').innerText = totalFeed;
+                console.log('id no then', idUsuario)
+                console.log('Seu feed total =', totalFeed);
+            });
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+    // function buscarTotalFav(idUsuario) {
+    //     fetch(`/favorito/feadback/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+    //         if (response.ok) {
+    //             response.json().then(function (resposta) {
+    //                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    //                 resposta.reverse();
+
+    //                 exibirGrafico(resposta, idUsuario);
+
+    //             });
+    //         } else {
+    //             console.error('Nenhum dado encontrado ou erro na API');
+    //         }
+    //     })
+    //         .catch(function (error) {
+    //             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    //         });
+    // }
 
     // exibirMeusFeelings
     function obterDadosGrafico() {
-        fetch(`/favorito/feadback/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
-
-                    exibirGrafico(resposta, idUsuario);
-
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
+        fetch(`/favorito/feadback/${idUsuario}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    console.log('id no obterDadosGrafico',idUsuario)
+                    // Tenta converter a resposta em JSON
+                    response.json()
+                        .then(function (resposta) {
+                            try {
+                                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                                resposta.reverse();
+                                exibirGrafico(resposta, idUsuario);
+                            } catch (erro) {
+                                console.error("Erro ao processar a resposta JSON: ", erro);
+                            }
+                        })
+                        .catch(function (erro) {
+                            // Captura erros de conversão JSON
+                            console.error("Erro ao converter resposta para JSON: ", erro);
+                        });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
             .catch(function (error) {
+                // Captura erros na requisição fetch
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
     }
+
 
     function exibirGrafico(resposta, idUsuario) {
 

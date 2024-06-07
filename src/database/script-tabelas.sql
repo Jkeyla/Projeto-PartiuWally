@@ -3,9 +3,9 @@
 comandos para mysql server
 */
 
-CREATE DATABASE partiuwally;
+CREATE DATABASE partiuWally;
 
-USE partiuwally;
+USE partiuWally;
 
 CREATE TABLE usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
@@ -44,11 +44,12 @@ insert into usuario(nome,email,senha,dtNasc) values
 
 insert into feedback (fkUsuario, titulo, descricao, dataHora) values 
 (1, 'Melhor que vôley (na minha opinião)', "desde que comecei a jogar, tive mais disponibilidade e soube trabalhar em melhor em equipe,", "2024-05-01 10:00:00"),
-(3, 'Contribuiu na minha saúde e bem estar', "O Wally é essencial na minha rotina, pelo menos uma vez na semana vou jogar numa quadra onde jovens se reunem e me deixam jogar também", "2024-05-10 20:00:00"),
-(2, 'Virou parte da minha rotina', "todo domingo depois do culto, junto com jovens da igreja nos reunimos para jogar, amo os domingos", "2024-05-03 12:00:00");
+(2, 'Virou parte da minha rotina', "todo domingo depois do culto, junto com jovens da igreja nos reunimos para jogar, amo os domingos", "2024-05-03 12:00:00"),
+(3, 'Contribuiu na minha saúde e bem estar', "O Wally é essencial na minha rotina, pelo menos uma vez na semana vou jogar numa quadra onde jovens se reunem e me deixam jogar também", "2024-05-10 20:00:00");
 
--- insert into feedback (fkUsuario, titulo, descricao, dataHora) values 
--- (1, 'competição de Wally', "ontem teve uma competição entre 5 equipes, e ganhamos UHUUL!!", "2024-05-11 10:00:00");
+
+ insert into feedback (fkUsuario, titulo, descricao, dataHora) values 
+ (1, 'competição de Wally', "ontem teve uma competição entre 5 equipes, e ganhamos UHUUL!!", "2024-05-11 10:00:00");
 
 select * from feedback;
 
@@ -56,8 +57,8 @@ insert into favorito (fkUsuario, fkFeedback, favoritado, dataHora)values
 (1, 2, 1, '2024-07-04 12:00:00'),
 (1, 3, 1, '2024-06-19 20:30:00'); 
 
- insert into favorito (fkUsuario, fkFeedback, favoritado, dataHora)values
- (1, 1, 0, '2024-07-05 12:00:00'); 
+-- insert into favorito (fkUsuario, fkFeedback, favoritado, dataHora)values
+-- (1, 1, 0, '2024-07-05 12:00:00'); 
 
 select * from favorito;
 select * from feedback;
@@ -198,3 +199,10 @@ UPDATE favorito f SET favoritado = 0, dataHora = now() WHERE fkUsuario = 1 AND f
 -- (1, 4, 1); 
  
  select* from favorito;
+ 
+ -- GRÁFICO
+ select SUM(favoritado) from favorito where fkUsuario = 1 ;
+ 
+     select SUM(favoritado) from favorito where fkUsuario = 1;
+     
+    select SUM(favoritado) as fav FROM favorito JOIN usuario ON favorito.fkUsuario = usuario.idUsuario where fkUsuario = 1 and fkFeedback= 2;

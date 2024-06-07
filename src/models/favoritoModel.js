@@ -63,10 +63,24 @@ function inserir(idUsuario, idFeedback) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
+function buscarTotalFeed(idUsuario) {
+    var instrucaoSql = `
+     select SUM(favoritado) as fav from favorito where fkUsuario = ${idUsuario};
+    `
+    console.log('dentro da model', idUsuario)
+    return database.executar(instrucaoSql);
+
+}
+
+// function buscarTotalFav(idUsuario) {
+
+// }
 module.exports = {
     exibirMeusFeedbacks,
     exibirFeedbacksFavoritos,
     verificar,
     inserir,
-    atualizar
+    atualizar,
+    buscarTotalFeed
 }; 
