@@ -203,6 +203,8 @@ UPDATE favorito f SET favoritado = 0, dataHora = now() WHERE fkUsuario = 1 AND f
  -- GRÁFICO
  select SUM(favoritado) from favorito where fkUsuario = 1 ;
  
-     select SUM(favoritado) from favorito where fkUsuario = 1;
+ -- qts ela favoritou
+     select SUM(favoritado) from favorito where fkUsuario = 4;
      
-    select SUM(favoritado) as fav FROM favorito JOIN usuario ON favorito.fkUsuario = usuario.idUsuario where fkUsuario = 1 and fkFeedback= 2;
+ -- qtd de feeling    
+select count(*) FROM feedback where fkUsuario = 1;

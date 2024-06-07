@@ -11,7 +11,7 @@
 
 </head>
 
-<body onload="obterDadosGrafico(); meusFavoritos(); buscarTotalFeed();">
+<body onload="obterDadosGrafico(); meusFavoritos(); buscarTotalFeed(); buscarTotalFav();">
     <div id="nav" class="navBar">
         <img src="./assets/imagens/logo.png">
         <ul class="container">
@@ -51,35 +51,33 @@
             method: 'GET'
         }).then(function (resposta) {
             console.log('resposta', resposta)
-            return resposta.json().then((favorito) => {
-                const totalFeed = favorito[0].fav;
-                document.querySelector('.totalFeedClass').innerText = totalFeed;
+            return resposta.json().then((feadback) => {
+                const totalFeed = feadback[0].feed;
+                document.querySelector('.totalFeedClass').innerText = `Total de Feelings pessoais: ${totalFeed}`;
                 console.log('id no then', idUsuario)
-                console.log('Seu feed total =', totalFeed);
+                console.log('Seu fead total =', totalFeed);
             });
         }).catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
         });
     }
-    // function buscarTotalFav(idUsuario) {
-    //     fetch(`/favorito/feadback/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
-    //         if (response.ok) {
-    //             response.json().then(function (resposta) {
-    //                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-    //                 resposta.reverse();
 
-    //                 exibirGrafico(resposta, idUsuario);
-
-    //             });
-    //         } else {
-    //             console.error('Nenhum dado encontrado ou erro na API');
-    //         }
-    //     })
-    //         .catch(function (error) {
-    //             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    //         });
-    // }
-
+    function buscarTotalFav() {
+        return fetch(`/favorito/totalFav/${idUsuario}`, {
+            method: 'GET'
+        }).then(function (resposta) {
+            console.log('resposta', resposta)
+            return resposta.json().then((favorito) => {
+                const totalFav = favorito[0].fav;
+                document.querySelector('.totalFavClass').innerText = `Total de Favoritos nos feelings: ${totalFav}`;
+                console.log('id no then', idUsuario)
+                console.log('Seu fav total =', totalFav);
+            });
+        }).catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+   
     // exibirMeusFeelings
     function obterDadosGrafico() {
         fetch(`/favorito/feadback/${idUsuario}`, { cache: 'no-store' })

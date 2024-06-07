@@ -20,13 +20,12 @@ router.post("/favoritar", function (req, res) {
 });
 
 
-router.get("/totalFeed/:idUsuario", function (req, res) {
-    console.log('na rota',idUsuario)
+router.get("/totalFeed/:idUsuario", async (req, res) => {
     favoritoController.buscarTotalFeed(req, res);
-});
+    });
 
-// router.get("/totalFav/:idUsuario", function (req, res) {
-//     favoritoController.buscarTotalFav(req, res);
-// });
+router.get("/totalFav/:idUsuario", async (req, res) => {
+    favoritoController.buscarTotalFav(req, res);
+});
 
 module.exports = router;

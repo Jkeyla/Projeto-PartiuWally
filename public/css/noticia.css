@@ -170,24 +170,35 @@ display: flex;
     width: 50%;
 }
 
-.indicadores{
+.indicadores {
     display: flex;
     align-items: center;
     justify-content: space-around;
     position: relative;
-    background-color: #77D400;
+    background-color: transparent;
+    height: 150px;
+    margin: 20px 0;
+}
+
+.totalFeedClass, .totalFavClass {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
     height: 100px;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.totalFeedClass{
-    background-color: red ;
-    width: 40%;
-    height: 50px;
+.totalFeedClass {
+    background-color: rgba(203, 93, 253, 0.6);
+    color: black;
 }
 
-
-.totalFavClass{
-    background-color: blue ;
-    width: 40%;
-    height: 50px;
+.totalFavClass {
+    background-color: rgba(255, 251, 96, 0.6);
+    color: black;
 }

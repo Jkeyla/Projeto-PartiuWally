@@ -124,7 +124,7 @@ function favoritar(req, res) {
 }
 
 function buscarTotalFeed(req, res) {
-    const idUsuario = req.body.idUsuario
+    const idUsuario = req.params.idUsuario
     
     console.log(`id do user:`, idUsuario);
 
@@ -137,7 +137,9 @@ function buscarTotalFeed(req, res) {
                     res.status(204).send("Nenhum resultado encontrado!");
                 }
             }
-        ).catch(function (erro) {
+        )
+        .catch(
+            function (erro) {
                 console.log(erro);
                 console.log(
                     "Houve um erro ao buscar os avisos: ",
@@ -149,34 +151,39 @@ function buscarTotalFeed(req, res) {
 
 }
 
-// function buscarTotalFav(req, res) {
-//     favoritoModel.buscarTotalFav(idUsuario)
-//     .then(
-//         function (resultado) {
-//             if (resultado.length > 0) {
-//                 res.status(200).json(resultado);
-//             } else {
-//                 res.status(204).send("Nenhum resultado encontrado!");
-//             }
-//         }
-//     )
-//     .catch(
-//         function (erro) {
-//             console.log(erro);
-//             console.log(
-//                 "Houve um erro ao buscar os avisos: ",
-//                 erro.sqlMessage
-//             );
-//             res.status(500).json(erro.sqlMessage);
-//         } 
-//     );
-// }
+function buscarTotalFav(req, res) {
+    const idUsuario = req.params.idUsuario
+    
+    console.log(`id do userFav:`, idUsuario);
+
+    favoritoModel.buscarTotalFav(idUsuario)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "Houve um erro ao buscar os avisos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+
+}
 
 module.exports = {
     exibirMeusFeedbacks,
     exibirFeedbacksFavoritos,
     verificar,
     favoritar,
-    buscarTotalFeed
-    // buscarTotalFav
+    buscarTotalFeed,
+    buscarTotalFav
 };

@@ -66,21 +66,26 @@ function inserir(idUsuario, idFeedback) {
 
 function buscarTotalFeed(idUsuario) {
     var instrucaoSql = `
-     select SUM(favoritado) as fav from favorito where fkUsuario = ${idUsuario};
+     SELECT count(*) as feed FROM feedback WHERE fkUsuario = ${idUsuario};
     `
     console.log('dentro da model', idUsuario)
     return database.executar(instrucaoSql);
 
 }
 
-// function buscarTotalFav(idUsuario) {
-
-// }
+function buscarTotalFav(idUsuario) {
+    var instrucaoSql = `
+    SELECT SUM(favoritado) as fav from favorito where fkUsuario = ${idUsuario};
+   `
+   console.log('dentro da model', idUsuario)
+   return database.executar(instrucaoSql);
+}
 module.exports = {
     exibirMeusFeedbacks,
     exibirFeedbacksFavoritos,
     verificar,
     inserir,
     atualizar,
-    buscarTotalFeed
+    buscarTotalFeed,
+    buscarTotalFav
 }; 
